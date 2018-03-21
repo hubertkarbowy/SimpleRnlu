@@ -1,0 +1,19 @@
+0	1	jaka	<KW>
+0	3	pogoda	<KW>
+1	2	jest	<KW>
+1	2	będzie	<KW>
+2	3	pogoda	<KW>
+3	4	<eps>	{INTENT:ShowWeather}
+4	5	w	<KW>
+4	5	na	<KW>
+4	7	<eps>	<DEFAULT_SLOT:here>
+7	8	<eps>	<DEFAULT_SLOT:today>
+5	5	<unk>	<COMPUTED_SLOT:CityName:NominalizeFromDative>
+5	6	jutro	<LOCALE_ALIAS_COMPUTED_SLOT:NamedDate>
+5	6	dziś	<LOCALE_ALIAS_COMPUTED_SLOT:NamedDate>
+5	9	<eps>	<DEFAULT_SLOT:today>
+4
+5
+6
+8
+9

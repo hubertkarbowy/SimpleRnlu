@@ -1,0 +1,10 @@
+<eps>	0
+<unk>	1
+jaka	2
+pogoda	3
+jest	4
+będzie	5
+w	6
+na	7
+jutro	8
+dziś	9

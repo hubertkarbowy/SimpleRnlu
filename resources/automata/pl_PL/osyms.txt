@@ -1,0 +1,5 @@
+<eps>	0
+<KW>	1
+{INTENT:ShowWeather}	2
+<COMPUTED_SLOT:CityName:NominalizeFromDative>	3
+<LOCALE_ALIAS_COMPUTED_SLOT:NamedDate>		4

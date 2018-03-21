@@ -1,0 +1,4 @@
+0	1	jaka
+1	2	jest
+2	3	pogoda
+3
