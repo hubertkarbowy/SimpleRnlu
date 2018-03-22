@@ -1,7 +1,13 @@
 package com.hubertkarbowy.simplenlu.util;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static com.hubertkarbowy.simplenlu.nl.SimpleRnlu.fstRootPath;
 
 public class FstOutput {
 
@@ -48,7 +54,6 @@ public class FstOutput {
         }
 
         return new File(sessionPath+".fst");
-
     }
 
     public void transduce() {
@@ -69,27 +74,36 @@ public class FstOutput {
         }
 
         // 3. Jesli dalej nic - wez ogolny
+            List<Path> intents = Files.walk(Paths.get(fstRootPath)).filter(x -> x.toString().contains("/root/") && x.toString().endsWith(".fst")).collect(Collectors.toList());
+            String[] cmd = new String[3]; cmd[0]="/bin/sh"; cmd[1]="-c";
+            for (Path intent : intents) {
+                cmd[2] = "fstcompose " + nlFst.toString() + " " + intent.toString() + " | fstproject --project_output | fstprint --acceptor";
+             //   System.out.println("[FSTCMD attempt]: " + Arrays.asList(cmd).get(2));
 
-
-            String[] cmd = {"/bin/sh", "-c", "fstcompose " + nlFst.toString() + " " + fstRootPath + "/root/pogoda.fst " + " | fstproject --project_output | fstprint --acceptor"};
-            Process p = Runtime.getRuntime().exec(cmd);
-            System.out.println("[FSTCMD ]: " + Arrays.asList(cmd).get(2));
-            p.waitFor();
-            String line;
-            BufferedReader in =
-                    new BufferedReader(new InputStreamReader(p.getInputStream()));
-            while ((line = in.readLine()) != null) {
-                try {
-                   // System.out.println(line);
-                    String outputTape = line.split("\t")[2];
-                    fstOutput.add(outputTape);
-                    if (outputTape.startsWith("{INTENT:")) recognizedIntent=outputTape;
+                Process p = Runtime.getRuntime().exec(cmd);
+                p.waitFor();
+                String line;
+                BufferedReader in =
+                        new BufferedReader(new InputStreamReader(p.getInputStream()));
+                while ((line = in.readLine()) != null) {
+                    try {
+                        // System.out.println(line);
+                        String outputTape = line.split("\t")[2];
+                        fstOutput.add(outputTape);
+                        if (outputTape.startsWith("{INTENT:")) recognizedIntent=outputTape;
+                    }
+                    catch (ArrayIndexOutOfBoundsException ee) {
+                 //         System.out.println("[FSTOUT ]: " + fstOutput);
+                    }
                 }
-                catch (ArrayIndexOutOfBoundsException ee) {
-                    System.out.println("[FSTOUT ]: " + fstOutput);
-                }
+                in.close();
+                if (recognizedIntent != null) break;
             }
-            in.close();
+
+            if (recognizedIntent!=null) {
+                System.out.println("[FSTCMD ]: " + Arrays.asList(cmd).get(2));
+                System.out.println("[FSTOUT ]: " + fstOutput);
+            }
         }
         catch (Exception e) {
             throw new RuntimeException(e);

@@ -8,3 +8,6 @@ w	6
 na	7
 jutro	8
 dziś	9
+gdzie   10
+leży    11
+leżą    12

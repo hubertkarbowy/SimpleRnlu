@@ -2,13 +2,23 @@ package com.hubertkarbowy.simplenlu.nl;
 
 import com.hubertkarbowy.simplenlu.nl.preprocessor.*;
 import com.hubertkarbowy.simplenlu.util.FstOutput;
-import jdk.nashorn.internal.parser.JSONParser;
+import com.hubertkarbowy.simplenlu.util.FstCompiler;
+import com.hubertkarbowy.simplenlu.util.PredefinedStates;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class SimpleRnlu {
 
     static Map<String, String> clientContext = new HashMap<>();
+    public static List<String> availableCultures = new ArrayList<>();
+    public static Path fstRootPath = Paths.get("resources/automata/");
+
+    static {
+        availableCultures.add("pl_PL");
+        availableCultures.add("en_US");
+    }
 
 	public static void main (String[] args) {
 		Locale pl_PL = new Locale("pl", "PL");
@@ -17,7 +27,8 @@ public class SimpleRnlu {
 
         Preprocessor preprocessor;
         Locale locale;
-        String asrOutput = "jaka jest pogoda dupa w suwonie jutro";
+        String asrOutput = "jaka będzie pogoda w krakowie jutro";
+        FstCompiler.compileRules();
 
 		// to w petli za kazdym przyjsciem nowego komunikatu od klienta
         // przypisanie locale na podstawie komunikatu klienta
@@ -27,6 +38,14 @@ public class SimpleRnlu {
                 if (asrOutput.startsWith("/sc")) {
                     setContext(asrOutput.replaceAll("/sc ", ""));
                     System.out.println("Set context: " + clientContext + "\n> ");
+                    continue;
+                }
+                if (asrOutput.startsWith("/def")) {
+                    PredefinedStates.setDefaultContext();
+                    continue;
+                }
+                if (asrOutput.startsWith("/cc")) {
+                    clearContext();
                     continue;
                 }
 
@@ -54,11 +73,15 @@ public class SimpleRnlu {
         }
 	}
 
-	static void setContext(String scparam) {
+	public static void setContext(String scparam) {
 	    System.out.println("Param = " + scparam);
-	    String[] params = scparam.split(" ");
+	    String[] params = scparam.split("\\*");
 	    String key = params[0];
 	    String value = params[1];
 	    clientContext.put(key, value);
+    }
+
+    public static void clearContext() {
+        clientContext.clear();
     }
 }
