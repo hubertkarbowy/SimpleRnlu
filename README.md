@@ -1,3 +1,3 @@
 # Simple rule-based NLU system
-....
-description tbc
+
+A simple voice assistant project based on OpenFST. Intent fullfilment writtten in Java.
