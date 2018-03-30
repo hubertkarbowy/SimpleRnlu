@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class MatchedIntent {
+public class MatchedIntent {
     String intent;
     List<String> slots = new ArrayList<>();
     List<String> values = new ArrayList<>();
@@ -81,9 +81,20 @@ class MatchedIntent {
     public void addValue(String value) { values.add(value); }
     public void setIntent(String newInt) { intent = newInt; }
 
+    public String getIntent() { return intent; }
+    public List<String> getSlotsAndValues () {
+
+        List<String> formattedSlots = new ArrayList<>();
+        for (int x=0; x<slots.size(); x++) {
+            String slotCumValue = "<" + slots.get(x) + ":" + values.get(x) + ">";
+            formattedSlots.add(slotCumValue);
+        }
+        return formattedSlots;
+    }
+
     public String toString() {
         StringBuilder formattedSlots = new StringBuilder();
-        for (int x=0; x<slots.size(); x++) { // we also need to merge neighboring slots
+        for (int x=0; x<slots.size(); x++) {
             formattedSlots.append("<"+slots.get(x));
             formattedSlots.append(":" + values.get(x) + ">");
         }

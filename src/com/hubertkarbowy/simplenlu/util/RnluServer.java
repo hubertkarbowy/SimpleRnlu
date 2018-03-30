@@ -35,7 +35,7 @@ public class RnluServer {
     String asrOutput = "jaka będzie pogoda w krakowie jutro";
 
     static protected ServerSocket serverSocket = null;
-    static protected int serverPort = 55101;
+    static protected int serverPort = 55100;
 
 
     public static void main(String[] args) {

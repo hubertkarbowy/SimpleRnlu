@@ -1,5 +1,6 @@
 package com.hubertkarbowy.simplenlu.nl;
 
+import com.hubertkarbowy.simplenlu.intents.IntentFullfilment;
 import com.hubertkarbowy.simplenlu.nl.preprocessor.*;
 import com.hubertkarbowy.simplenlu.util.FstOutput;
 import com.hubertkarbowy.simplenlu.util.FstCompiler;
@@ -112,7 +113,9 @@ public class SimpleRnlu implements Runnable {
                     fst.transduce();
                     MatchedIntent intentString = new MatchedIntent(nlTokens, fst.getFstOutput(), locale, clientContext);
                     System.out.println("[NLU    ]:" + intentString);
+                    System.out.println("[RESPONS]:" + IntentFullfilment.getResponse(intentString, locale)); // TODO: intentString is not really a string -- change name
                     clientWrite.println(intentString);
+
                 }
                 else { System.out.println("Unknown command"); clientWrite.println("Unknown command"); }
 
