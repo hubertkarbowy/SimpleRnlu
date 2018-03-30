@@ -1,18 +1,12 @@
 package com.hubertkarbowy.simplenlu.util;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.rmi.server.ExportException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static com.hubertkarbowy.simplenlu.nl.SimpleRnlu.*;
+import static com.hubertkarbowy.simplenlu.util.RnluSettings.*;
 
 public class FstCompiler {
 

@@ -8,5 +8,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="sphinx4-core-5prealpha" level="project" />
+    <orderEntry type="library" name="sphinx4-data-5prealpha" level="project" />
   </component>
 </module>
