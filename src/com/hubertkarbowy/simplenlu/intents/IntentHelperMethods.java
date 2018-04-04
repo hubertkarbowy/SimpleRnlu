@@ -1,6 +1,8 @@
 package com.hubertkarbowy.simplenlu.intents;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class IntentHelperMethods {
 
@@ -14,5 +16,9 @@ public class IntentHelperMethods {
             }
         }
         return val;
+    }
+
+    static String capitalizeEachWord (String seq) {
+        return String.join(" ", Arrays.asList(seq.split(" ")).stream().map(x -> x.substring(0,1).toUpperCase() + x.substring(1)).collect(Collectors.toList()));
     }
 }

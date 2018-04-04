@@ -113,8 +113,10 @@ public class SimpleRnlu implements Runnable {
                     fst.transduce();
                     MatchedIntent intentString = new MatchedIntent(nlTokens, fst.getFstOutput(), locale, clientContext);
                     System.out.println("[NLU    ]:" + intentString);
-                    System.out.println("[RESPONS]:" + IntentFullfilment.getResponse(intentString, locale)); // TODO: intentString is not really a string -- change name
+                    String responses = IntentFullfilment.getResponse(intentString, locale);
+                    System.out.println("[RESPONS]:" + responses);
                     clientWrite.println(intentString);
+                    clientWrite.println(responses);
 
                 }
                 else { System.out.println("Unknown command"); clientWrite.println("Unknown command"); }
