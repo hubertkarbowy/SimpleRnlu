@@ -14,13 +14,24 @@ public class WeatherIntents {
         // ResourceBundle rb = ResourceBundle.getBundle("responses/WeatherResponses", locale);
         ResourceBundle rb = ResourceBundle.getBundle("responses/WeatherResponses", locale, new UTF8Control());
         Map<String, String> retVal = new HashMap<>();
-        String[] cmd = {"S_in", "location", "VAL:" +  capitalizeEachWord(extractValue("CityName", args)), "willbe", "hot"};
-        String spokenText = String.join(" ", Arrays.asList(cmd).stream().map(x-> {
-            if (x.startsWith("VAL:")) return x.substring(4);
-            else return rb.getString(x);
-        }).collect(Collectors.toList()));
+        String displayText;
+        String spokenText;
 
-        String displayText = spokenText;
+
+        String cityName = extractValue("CityName", args);
+        String cityID = fetchOpenWeathermapInfo(cityName);
+        if (cityID == null) {
+            displayText = spokenText = "Nie udało się znaleźć pogody dla miejscowości " + capitalizeEachWord(cityName);
+        }
+        else {
+            String[] cmd = {"S_in", "location", "VAL:" + capitalizeEachWord(cityName), "willbe", "hot"};
+            spokenText = String.join(" ", Arrays.asList(cmd).stream().map(x -> {
+                if (x.startsWith("VAL:")) return x.substring(4);
+                else return rb.getString(x);
+            }).collect(Collectors.toList()));
+            displayText = spokenText;
+        }
+
 
         retVal.put("SpokenText", spokenText);
         retVal.put("DisplayText", displayText);

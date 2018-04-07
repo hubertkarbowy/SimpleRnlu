@@ -9,4 +9,5 @@ public class RnluSettings {
     public static List<String> availableCultures = Arrays.asList("pl_PL", "en_US");
     public static Path fstRootPath = Paths.get("resources/automata/");
     public static List<String> cmdList = Arrays.asList("/q", "/sc", "/def");
+    public static String weatherGazetterPath = "resources/gazetteers/city.list.json";
 }

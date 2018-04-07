@@ -95,32 +95,36 @@ public class SimpleRnlu implements Runnable {
 
             // MAIN INTERPRETER
             while (!(recvd=clientRead.readLine()).startsWith("/q")) {
-                System.out.println("Recvd: " + recvd);
-                if (recvd.startsWith("/sc")) {
-                    setContext(recvd.replaceAll("/sc ", ""));
-                    //  System.out.println("Set context: " + clientContext + "\n> ");
+                try {
+                    System.out.println("Recvd: " + recvd);
+                    if (recvd.startsWith("/sc")) {
+                        setContext(recvd.replaceAll("/sc ", ""));
+                        //  System.out.println("Set context: " + clientContext + "\n> ");
+                    } else if (recvd.startsWith("/def")) PredefinedStates.setDefaultContext(this);
+                    else if (recvd.startsWith("/cc")) clearContext();
+                    else if (recvd.startsWith("/cmd ")) {
+                        String asrOutput = recvd.replaceAll("/cmd ", "");
+                        System.out.println("[ASR    ]: " + asrOutput);
+                        List<String> nlTokens = preprocessor.tokenize(asrOutput);
+                        System.out.println("[TOKENIZ]: " + nlTokens);
+                        List<String> preprocessorTokens = preprocessor.unknownize(nlTokens);
+                        System.out.println("[PREPROC]: " + preprocessorTokens);
+                        FstOutput fst = new FstOutput(locale, preprocessorTokens, null);
+                        fst.transduce();
+                        MatchedIntent intentString = new MatchedIntent(nlTokens, fst.getFstOutput(), locale, clientContext);
+                        System.out.println("[NLU    ]:" + intentString);
+                        String responses = IntentFullfilment.getResponse(intentString, locale);
+                        System.out.println("[RESPONS]:" + responses);
+                        clientWrite.println(intentString);
+                        clientWrite.println(responses);
+                    } else {
+                        System.out.println("Unknown command");
+                        clientWrite.println("Unknown command");
+                    }
                 }
-                else if (recvd.startsWith("/def")) PredefinedStates.setDefaultContext(this);
-                else if (recvd.startsWith("/cc")) clearContext();
-                else if (recvd.startsWith("/cmd ")) {
-                    String asrOutput = recvd.replaceAll("/cmd ", "");
-                    System.out.println("[ASR    ]: " + asrOutput);
-                    List<String> nlTokens = preprocessor.tokenize(asrOutput);
-                    System.out.println("[TOKENIZ]: " + nlTokens);
-                    List<String> preprocessorTokens = preprocessor.unknownize(nlTokens);
-                    System.out.println("[PREPROC]: " + preprocessorTokens);
-                    FstOutput fst = new FstOutput(locale, preprocessorTokens, null);
-                    fst.transduce();
-                    MatchedIntent intentString = new MatchedIntent(nlTokens, fst.getFstOutput(), locale, clientContext);
-                    System.out.println("[NLU    ]:" + intentString);
-                    String responses = IntentFullfilment.getResponse(intentString, locale);
-                    System.out.println("[RESPONS]:" + responses);
-                    clientWrite.println(intentString);
-                    clientWrite.println(responses);
-
+                catch (RuntimeException ex) {
+                    clientWrite.println("Oops... sth went wrong");
                 }
-                else { System.out.println("Unknown command"); clientWrite.println("Unknown command"); }
-
             }
             clientSocket.close();
         }
@@ -134,7 +138,7 @@ public class SimpleRnlu implements Runnable {
 	    String[] params = scparam.split("\\*");
 	    String key = params[0];
 	    String value = params[1];
-	    clientContext.put(key, value);
+	    this.clientContext.put(key, value);
     }
 
     private void clearContext() {

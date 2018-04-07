@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.hubertkarbowy.simplenlu.nl.SimpleRnlu.fstRootPath;
+// import static com.hubertkarbowy.simplenlu.nl.SimpleRnlu.fstRootPath;
 
 public class FstOutput {
 

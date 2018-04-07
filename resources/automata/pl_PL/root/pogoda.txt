@@ -5,6 +5,7 @@
 2	3	pogoda	<KW>
 3	4	<eps>	{INTENT:ShowWeather}
 4	5	w	<KW>
+4	5	we	<KW>
 4	5	na	<KW>
 4	7	<eps>	<DEFAULT_SLOT:CityName:here>
 7	8	<eps>	<DEFAULT_SLOT:NamedDate:today>
