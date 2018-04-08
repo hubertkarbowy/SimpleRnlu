@@ -14,7 +14,7 @@ import java.util.*;
 
 public class SimpleRnlu implements Runnable {
 
-    static String version = "0.1a";
+    static String version = "0.2a";
     private Map<String, String> clientContext = new HashMap<>();
     Preprocessor preprocessor;
     Locale locale;
@@ -104,6 +104,7 @@ public class SimpleRnlu implements Runnable {
                     else if (recvd.startsWith("/cc")) clearContext();
                     else if (recvd.startsWith("/cmd ")) {
                         String asrOutput = recvd.replaceAll("/cmd ", "");
+                        asrOutput = asrOutput.toLowerCase();
                         System.out.println("[ASR    ]: " + asrOutput);
                         List<String> nlTokens = preprocessor.tokenize(asrOutput);
                         System.out.println("[TOKENIZ]: " + nlTokens);
@@ -124,6 +125,7 @@ public class SimpleRnlu implements Runnable {
                 }
                 catch (RuntimeException ex) {
                     clientWrite.println("Oops... sth went wrong");
+                    ex.printStackTrace();
                 }
             }
             clientSocket.close();

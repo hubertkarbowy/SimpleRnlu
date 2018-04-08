@@ -36,7 +36,7 @@ public class MatchedIntent {
 
                 optType = optType.replaceAll(">", "");
                 opFun = opFun.replaceAll(">", "");
-                computedValue = ComputedSlots.compute(opFun, nlTokens.get(nlIndex), culture);
+                computedValue = ComputedSlots.compute(opFun, optType, nlTokens.get(nlIndex), culture);
                 slots.add(optType);
                 values.add(computedValue);
             }

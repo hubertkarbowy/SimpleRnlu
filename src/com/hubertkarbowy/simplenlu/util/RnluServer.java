@@ -1,7 +1,12 @@
 package com.hubertkarbowy.simplenlu.util;
 
+import com.hubertkarbowy.simplenlu.intents.IntentHelperMethods;
+import com.hubertkarbowy.simplenlu.nl.AlignmentHelpers;
 import com.hubertkarbowy.simplenlu.nl.SimpleRnlu;
 import com.hubertkarbowy.simplenlu.nl.preprocessor.*;
+
+import static com.hubertkarbowy.simplenlu.intents.IntentHelperMethods.getPolimorfBaseForm;
+import static com.hubertkarbowy.simplenlu.nl.AlignmentHelpers.editDistance;
 import static com.hubertkarbowy.simplenlu.util.FstCompiler.compileRules;
 
 import java.io.BufferedReader;
@@ -39,6 +44,10 @@ public class RnluServer {
 
 
     public static void main(String[] args) {
+
+//        String xx = getPolimorfBaseForm("Nowackich", new String[] {"nazwisko", "f"});
+//        System.out.println(xx);
+//        System.exit(0);
         System.out.println("Starting NLU engine...");
         FstCompiler.compileRules();
         System.out.println("Starting server...");

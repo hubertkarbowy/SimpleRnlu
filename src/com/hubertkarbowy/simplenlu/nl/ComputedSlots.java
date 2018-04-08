@@ -8,8 +8,21 @@ public class ComputedSlots {
     // Map definitions
     private static Map<String, BiFunction<String, String, String>> plComputations = new HashMap<>();
 
+
     // Function definitions
-    private static BiFunction<String, String, String> pl_dativeToNom = (x, y) -> {
+    private static BiFunction<String, String, String> pl_dativeToNom = (x, y) -> { // x = slot value, y = slot type
+
+        // If the slot type is CityName, let's first try lemmatizing with Polimorf in a very simplified way.
+        // This will behave erratically since the inputs are underspecified for gender and number, so
+        // e.g. for "nowym" we have two nominative forms: nowy (masc) and nowe (neut).
+        // However, we're counting on the edit distance on the gazetteer to correct this for us.
+
+        if (y.equals("CityName")) {
+
+        }
+
+        // Otherwise, try a heuristics.
+
         String stemcons=""; String sfxending="";
         if (x.endsWith("ie")) {
             if (x.endsWith("dzie")) return x.replaceAll("dzie$", "d");
@@ -27,7 +40,7 @@ public class ComputedSlots {
         plComputations.put("NominalizeFromDative", pl_dativeToNom);
     }
 
-    static String compute (String functionName, String slotParamValue, Locale culture) {
+    static String compute (String functionName, String slotType, String slotParamValue, Locale culture) {
 
         String retVal = null;
         BiFunction<String, String, String> f = null;
@@ -41,7 +54,7 @@ public class ComputedSlots {
                 break;
         }
 
-        if (f != null) retVal = f.apply(slotParamValue, null); // rezerwujemy drugi parametr, ale go nie uzywamy
+        if (f != null) retVal = f.apply(slotParamValue, slotType);
         return retVal;
     }
 }

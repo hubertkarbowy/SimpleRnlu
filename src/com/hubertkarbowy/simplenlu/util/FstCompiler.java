@@ -25,7 +25,7 @@ public class FstCompiler {
                 Path compiledFst = rule.getParent().resolve(basename.toString().replaceAll(".txt", ".fst"));
                 System.out.println("Compiling " + rule + " into " + compiledFst + " [culture = " + culture + "]");
                 String[] cmd = {"/bin/sh", "-c", "fstcompile --isymbols=" + fstRootPath + "/" + culture + "/isyms.txt --osymbols=" + fstRootPath + "/" + culture + "/osyms.txt --keep_isymbols --keep_osymbols " + rule + " " + compiledFst};
-                // System.out.println(String.join(" ", cmd));
+                System.out.println(String.join(" ", cmd));
                 Process p = Runtime.getRuntime().exec(cmd);
                 p.waitFor();
             }
