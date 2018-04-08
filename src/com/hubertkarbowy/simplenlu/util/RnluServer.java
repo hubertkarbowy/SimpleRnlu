@@ -1,6 +1,7 @@
 package com.hubertkarbowy.simplenlu.util;
 
 import com.hubertkarbowy.simplenlu.intents.IntentHelperMethods;
+import com.hubertkarbowy.simplenlu.intents.UTF8Control;
 import com.hubertkarbowy.simplenlu.nl.AlignmentHelpers;
 import com.hubertkarbowy.simplenlu.nl.SimpleRnlu;
 import com.hubertkarbowy.simplenlu.nl.preprocessor.*;
@@ -8,6 +9,7 @@ import com.hubertkarbowy.simplenlu.nl.preprocessor.*;
 import static com.hubertkarbowy.simplenlu.intents.IntentHelperMethods.getPolimorfBaseForm;
 import static com.hubertkarbowy.simplenlu.nl.AlignmentHelpers.editDistance;
 import static com.hubertkarbowy.simplenlu.util.FstCompiler.compileRules;
+import static com.hubertkarbowy.simplenlu.util.RnluSettings.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,6 +23,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class RnluServer {
 
@@ -45,9 +48,11 @@ public class RnluServer {
 
     public static void main(String[] args) {
 
-//        String xx = getPolimorfBaseForm("Nowackich", new String[] {"nazwisko", "f"});
+//        String xx = getPolimorfBaseForm("Nowym", new String[] {"loc", "n2"});
 //        System.out.println(xx);
+//        HttpHelperMethods.readFromApi(OPENWEATHERMAP_API_URL, "forecast", new String[] {"APPID=d41602d0873dc3ed5288a05a4d460015", "id=6695624"});
 //        System.exit(0);
+
         System.out.println("Starting NLU engine...");
         FstCompiler.compileRules();
         System.out.println("Starting server...");

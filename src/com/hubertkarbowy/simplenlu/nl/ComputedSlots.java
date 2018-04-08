@@ -1,5 +1,7 @@
 package com.hubertkarbowy.simplenlu.nl;
 
+import com.hubertkarbowy.simplenlu.intents.IntentHelperMethods;
+
 import java.util.*;
 import java.util.function.*;
 
@@ -17,9 +19,11 @@ public class ComputedSlots {
         // e.g. for "nowym" we have two nominative forms: nowy (masc) and nowe (neut).
         // However, we're counting on the edit distance on the gazetteer to correct this for us.
 
-        if (y.equals("CityName")) {
-
-        }
+        String nominalized = null;
+        if (y.equals("CityName")) nominalized = IntentHelperMethods.getPolimorfBaseForm(
+                x.substring(0, 1).toUpperCase() + x.substring(1),
+                new String[] {"loc", "geograficzna"});
+        if (nominalized !=null) return nominalized;
 
         // Otherwise, try a heuristics.
 
