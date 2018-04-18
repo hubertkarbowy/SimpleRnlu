@@ -89,7 +89,7 @@ public class SimpleRnlu implements Runnable {
             clientWrite.println("Protocol:\n1st line: culture, e.g. pl_PL");
             String recvd = clientRead.readLine();
             System.out.println("Culture received: " + recvd);
-                if (recvd.equals("pl_PL")) { locale = new Locale("pl", "PL"); preprocessor = new Preprocessor_pl_PL(); }
+                if (recvd.equals("pl_PL")) { locale = new Locale("pl", "PL"); preprocessor = new Preprocessor_pl_PL(); } // TODO: refactor with Factory pattern
                 else if (recvd.equals("en_US")) { locale = new Locale("en", "US"); preprocessor = new Preprocessor_en_US(); }
                 else {clientWrite.println("E:Unsupported culture."); clientSocket.close(); return;}
 
@@ -128,6 +128,7 @@ public class SimpleRnlu implements Runnable {
                     ex.printStackTrace();
                 }
             }
+            System.out.println("[SESSION]: End");
             clientSocket.close();
         }
         catch (Exception e) {

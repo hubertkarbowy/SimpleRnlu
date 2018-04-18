@@ -20,6 +20,8 @@ import java.net.Socket;
 import java.nio.Buffer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -27,20 +29,11 @@ import java.util.ResourceBundle;
 
 public class RnluServer {
 
-    Locale pl_PL = new Locale("pl", "PL");
-    Preprocessor preprocessor_pl_PL = new Preprocessor_pl_PL(); // TODO: 1) sprawdzenie kultury -> moze mapa z klasami?, 2) zrobic te klasy singletonami
-    Preprocessor preprocessor_en_US = new Preprocessor_en_US();
     public static List<String> availableCultures = new ArrayList<>();
-    public static Path fstRootPath = Paths.get("resources/automata/");
-
     static {
         availableCultures.add("pl_PL");
         availableCultures.add("en_US");
     }
-
-    Preprocessor preprocessor;
-    Locale locale;
-    String asrOutput = "jaka będzie pogoda w krakowie jutro";
 
     static protected ServerSocket serverSocket = null;
     static protected int serverPort = 55100;
@@ -51,6 +44,10 @@ public class RnluServer {
 //        String xx = getPolimorfBaseForm("Nowym", new String[] {"loc", "n2"});
 //        System.out.println(xx);
 //        HttpHelperMethods.readFromApi(OPENWEATHERMAP_API_URL, "forecast", new String[] {"APPID=d41602d0873dc3ed5288a05a4d460015", "id=6695624"});
+
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//        LocalDateTime x = LocalDateTime.parse("2018-04-10 21:00:00", formatter);
+//        System.out.println("Day is " + x.format(formatter));
 //        System.exit(0);
 
         System.out.println("Starting NLU engine...");

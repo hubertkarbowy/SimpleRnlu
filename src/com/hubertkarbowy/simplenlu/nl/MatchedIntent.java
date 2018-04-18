@@ -1,11 +1,13 @@
 package com.hubertkarbowy.simplenlu.nl;
 
+import com.hubertkarbowy.simplenlu.nl.slots.AliasedSlots;
+import com.hubertkarbowy.simplenlu.nl.slots.ComputedSlots;
+import com.hubertkarbowy.simplenlu.nl.slots.DefaultSlots;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MatchedIntent {
     String intent;
@@ -26,7 +28,10 @@ public class MatchedIntent {
                 String optType = currentSymbol.split(":")[1];
                 optType = optType.replaceAll(">", "");
                 slots.add(optType);
-                values.add(AliasedSlots.compute(optType, nlTokens.get(nlIndex), culture));
+                AliasedSlots as = AliasedSlots.getAliasedSlots(culture);
+                String computedValue = AliasedSlots.compute(as.getAliases(), optType, nlTokens.get(nlIndex));
+                if (computedValue==null) throw new RuntimeException("Aliased slot is null!");
+                values.add(computedValue);
             }
 
             if (currentSymbol.startsWith("<COMPUTED_SLOT:")) {
@@ -37,6 +42,7 @@ public class MatchedIntent {
                 optType = optType.replaceAll(">", "");
                 opFun = opFun.replaceAll(">", "");
                 computedValue = ComputedSlots.compute(opFun, optType, nlTokens.get(nlIndex), culture);
+                if (computedValue==null) throw new RuntimeException("Computed slot is null!");
                 slots.add(optType);
                 values.add(computedValue);
             }
@@ -45,9 +51,10 @@ public class MatchedIntent {
                 String opFun = currentSymbol.split(":")[2];
                 opFun = opFun.replaceAll(">", "");
                 optType = optType.replaceAll(">", "");
-
+                String computedValue = DefaultSlots.compute(opFun, clientContext);
+                if (computedValue==null) throw new RuntimeException("Default slot is null!");
                 slots.add(optType);
-                values.add(DefaultSlots.compute(opFun, clientContext, culture));
+                values.add(computedValue);
             }
 
             if (!currentSymbol.startsWith("{INTENT:")) nlIndex++;

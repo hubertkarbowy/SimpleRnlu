@@ -12,3 +12,4 @@ dziś	10
 gdzie   11
 leży    12
 leżą    13
+są  14

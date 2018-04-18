@@ -8,13 +8,11 @@ import java.util.stream.Collectors;
 
 public abstract class Preprocessor {
 
-    public abstract Map<Integer, String> getSymbols ();
-    protected abstract String getIsymsPath ();
+    protected Map<Integer, String> isyms;
+    protected String isymsPath;
 
     public void readSymbols() {
         String symbol;
-        Map<Integer, String> isyms = getSymbols();
-        String isymsPath =  getIsymsPath();
 
         try {
             BufferedReader isyms_reader = new BufferedReader(new FileReader(new File(isymsPath)));
@@ -30,8 +28,16 @@ public abstract class Preprocessor {
         }
     }
 
-    public List<String> unknownize (List<String> nlInput) { // TODO: potem zmienic na protected, getSymbols tez
-        return nlInput.stream().map(x -> getSymbols().containsValue(x) ? x : "<unk>").collect(Collectors.toList());
+    public Map<Integer, String> getSymbols () {
+        return isyms;
+    }
+
+    protected String getIsymsPath () {
+        return isymsPath;
+    }
+
+    public List<String> unknownize (List<String> nlInput) { // TODO: potem zmienic na protected (?)
+        return nlInput.stream().map(x -> isyms.containsValue(x) ? x : "<unk>").collect(Collectors.toList());
     }
 
     public abstract List<String> tokenize (String asrOutput);

@@ -2,6 +2,7 @@ package com.hubertkarbowy.simplenlu.util;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,4 +17,6 @@ public class RnluSettings {
 
     public static final String OPENWEATHERMAP_API_KEY="d41602d0873dc3ed5288a05a4d460015";
     public static final String OPENWEATHERMAP_API_URL="http://api.openweathermap.org/data/2.5/";
+
+    public static final DateTimeFormatter OPENWEATHERMAP_DATETIMEFORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 }

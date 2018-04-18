@@ -1,0 +1,17 @@
+0	1	what	<KW>
+1	2	is	<KW>
+2	3	the	<KW>
+1	3	is	<KW>
+3	4	weather	<KW>
+4	5	<eps>	{INTENT:ShowWeather}
+5	6	<eps>	<DEFAULT_SLOT:CityName:here>
+6	7	<eps>	<DEFAULT_SLOT:NamedDate:today>
+5	8	in	<KW>
+5	8	on	<KW>
+8	9	<unk>	<REWRITE_SLOT:CityName>
+9	9	<unk>	<REWRITE_SLOT:CityName>
+9	10	<eps>	<DEFAULT_SLOT:NamedDate:today>
+9	10	today	<LOCALE_ALIAS_COMPUTED_SLOT:NamedDate>
+9	10	tomorrow	<LOCALE_ALIAS_COMPUTED_SLOT:NamedDate>
+7
+10

@@ -47,39 +47,12 @@ public class IntentHelperMethods {
         return String.join(" ", Arrays.asList(seq.split(" ")).stream().map(x -> x.substring(0,1).toUpperCase() + x.substring(1)).collect(Collectors.toList()));
     }
 
-    static WeatherIntents.CityIDTuple fetchOpenWeathermapInfo (String cityName) {
-        String foundID = null;
-        String foundName = null;
+    public static String formatPunctuation (String seq) {
 
-        String foundIDHeuristically = null;
-        String foundNameHeuristically = null;
-
-        int minEditDistance=100;
-        for (Object cityobj : weatherGazetteer) {
-            JSONObject city = (JSONObject) cityobj;
-            String json_city = city.get("name").toString().toLowerCase();
-            String json_cityid = city.get("id").toString();
-            int editDistance = editDistance(json_city, cityName, DistanceType.LEVENSHTEIN);
-            if (editDistance < minEditDistance) {
-                minEditDistance=editDistance;
-                foundIDHeuristically = json_cityid;
-                foundNameHeuristically = json_city;
-            }
-            if (editDistance==0) { foundID=json_cityid; foundName=json_city; break; }
-        }
-
-        if (foundID==null && minEditDistance<=MAX_EDIT_DISTANCE) {
-            foundID=foundIDHeuristically;
-            foundName=foundNameHeuristically;
-        }
-
-        if (foundID != null) {
-            JSONParser parser = new JSONParser();
-            // JSONObject apiResponse = (JSONObject) parser.parse(new FileReader("x"));
-            return new WeatherIntents.CityIDTuple(foundID, foundName);
-
-        }
-        else return null;
+        String retVal = seq.replaceAll(" *$|^ *", "");
+        retVal = retVal.replaceAll("  ", " ");
+        retVal = retVal.replaceAll(" \\.", ".");
+        return retVal;
     }
 
     /**
@@ -111,7 +84,7 @@ public class IntentHelperMethods {
     }
 
     static void loadPolimorf() {
-        // TODO: Rather than load the whole bunch into memory, consider a binary search over the sorted file.
+        // TODO: Rather than load the whole bunch into memory, consider binary search over the sorted file.
 
         polimorf_pl_PL = new HashMap<>();
 //        try {
