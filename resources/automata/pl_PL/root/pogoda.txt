@@ -1,18 +1,18 @@
-0	1	jaka	<KW>
-0	3	pogoda	<KW>
-1	2	jest	<KW>
-1	2	będzie	<KW>
-2	3	pogoda	<KW>
-3	4	<eps>	{INTENT:ShowWeather}
-4	5	w	<KW>
-4	5	we	<KW>
-4	5	na	<KW>
-4	7	<eps>	<DEFAULT_SLOT:CityName:here>
-7	8	<eps>	<DEFAULT_SLOT:NamedDate:today>
-5	5	<unk>	<COMPUTED_SLOT:CityName:NominalizeFromDative>
-5	6	jutro	<LOCALE_ALIAS_COMPUTED_SLOT:NamedDate>
-5	6	dziś	<LOCALE_ALIAS_COMPUTED_SLOT:NamedDate>
-5	9	<eps>	<DEFAULT_SLOT:NamedDate:today>
+0	1	jaka	<KW>    100
+0	3	pogoda	<KW>    100
+1	2	jest	<KW>    100
+1	2	będzie	<KW>    100
+2	3	pogoda	<KW>    100
+3	4	<eps>	{INTENT:ShowWeather}    0
+4	5	w	<KW>    100
+4	5	we	<KW>    100
+4	5	na	<KW>    100
+4	7	<eps>	<DEFAULT_SLOT:CityName:here>    90
+7	8	<eps>	<DEFAULT_SLOT:NamedDate:today>  90
+5	5	<unk>	<COMPUTED_SLOT:CityName:NominalizeFromDative>   90
+5	6	jutro	<LOCALE_ALIAS_COMPUTED_SLOT:NamedDate>  90
+5	6	dziś	<LOCALE_ALIAS_COMPUTED_SLOT:NamedDate>  90
+5	9	<eps>	<DEFAULT_SLOT:NamedDate:today>  90
 4
 5
 6

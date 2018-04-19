@@ -108,9 +108,9 @@ public class SimpleRnlu implements Runnable {
                         System.out.println("[ASR    ]: " + asrOutput);
                         List<String> nlTokens = preprocessor.tokenize(asrOutput);
                         System.out.println("[TOKENIZ]: " + nlTokens);
-                        List<String> preprocessorTokens = preprocessor.unknownize(nlTokens);
-                        System.out.println("[PREPROC]: " + preprocessorTokens);
-                        FstOutput fst = new FstOutput(locale, preprocessorTokens, null);
+//                        List<String> preprocessorTokens = preprocessor.unknownize(nlTokens);
+//                        System.out.println("[PREPROC]: " + preprocessorTokens);
+                        FstOutput fst = new FstOutput(locale, nlTokens, null, preprocessor);
                         fst.transduce();
                         MatchedIntent intentString = new MatchedIntent(nlTokens, fst.getFstOutput(), locale, clientContext);
                         System.out.println("[NLU    ]:" + intentString);

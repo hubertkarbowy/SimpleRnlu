@@ -8,36 +8,42 @@ import java.util.stream.Collectors;
 
 public abstract class Preprocessor {
 
-    protected Map<Integer, String> isyms;
-    protected String isymsPath;
+    protected Map<String, Map<Integer, String>> isyms; // key = transducer name, value = actual isyms map
+    protected Map<String, String> isymsPaths;
 
     public void readSymbols() {
         String symbol;
 
         try {
-            BufferedReader isyms_reader = new BufferedReader(new FileReader(new File(isymsPath)));
-            Pattern symbolEntry = Pattern.compile("([\\w<>]+)[\\s\\t]+(.*)", Pattern.UNICODE_CHARACTER_CLASS);
-            while ((symbol = isyms_reader.readLine()) != null) {
-                   // System.out.println("SYMBOL LINE "+ symbol);
+            for (Map.Entry<String, String> singleTransducer : isymsPaths.entrySet()) {
+                System.out.println("[ISYMSPA]: Reading symbol table of " + singleTransducer.getKey());
+                isyms.put(singleTransducer.getKey(), new HashMap<>());
+                Map<Integer,String> thisIsyms = isyms.get(singleTransducer.getKey());
+                BufferedReader isyms_reader = new BufferedReader(new FileReader(new File(singleTransducer.getValue())));
+                Pattern symbolEntry = Pattern.compile("([\\w<>]+)[\\s\\t]+(.*)", Pattern.UNICODE_CHARACTER_CLASS);
+                while ((symbol = isyms_reader.readLine()) != null) {
+                     System.out.println("SYMBOL LINE "+ symbol);
                     Matcher m = symbolEntry.matcher(symbol);
-                    if (m.find()) isyms.put(Integer.parseInt(m.group(2)), m.group(1));
+                    if (m.find()) thisIsyms.put(Integer.parseInt(m.group(2)), m.group(1));
+                }
             }
+
         }
         catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public Map<Integer, String> getSymbols () {
+    public Map<String, Map<Integer, String>> getTransducersAndSymbols () {
         return isyms;
     }
 
-    protected String getIsymsPath () {
-        return isymsPath;
-    }
+    protected Map<String, String> getIsymsPaths () { return isymsPaths; }
 
-    public List<String> unknownize (List<String> nlInput) { // TODO: potem zmienic na protected (?)
-        return nlInput.stream().map(x -> isyms.containsValue(x) ? x : "<unk>").collect(Collectors.toList());
+    public List<String> unknownize (List<String> nlInput, String transducer) { // TODO: potem zmienic na protected (?), getSymbols tez
+        Map<Integer, String> thisIsyms = isyms.get(transducer);
+        if (transducer==null || thisIsyms==null) throw new RuntimeException("Transducer " + transducer + " not found!");
+        return nlInput.stream().map(x -> thisIsyms.containsValue(x) ? x : "<unk>").collect(Collectors.toList());
     }
 
     public abstract List<String> tokenize (String asrOutput);

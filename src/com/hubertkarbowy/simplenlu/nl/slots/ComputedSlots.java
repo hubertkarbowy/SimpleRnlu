@@ -39,9 +39,28 @@ public class ComputedSlots {
         else return x;
         };
 
+    private static BiFunction<String, String, String> pl_appNameMapperFromAcc = (x, y) -> {
+        if (x.equals("galerię")) return "Gallery";
+        else if (x.equals("kalkulator")) return "Calculator";
+        else if (x.equals("kontakty")) return "Contacts";
+        else if (x.equals("ustawienia")) return "Settings";
+        else if (x.equals("sieci")) return "_Net";
+        else if (x.equals("zegar")) return "Clock";
+        else if (x.equals("przeglądarkę")) return "Browser";
+        else if (x.equals("pocztę") || x.equals("email") || x.equals("e-mail")) return "Email";
+        else if (x.equals("muzykę")) return "MusicPlayer";
+        else if (x.equals("telefon")) return "Phone";
+        else if (x.equals("smsy")) return "Sms";
+        else if (x.equals("nawigację")) return "Navigation";
+        else if (x.equals("alarmy")) return "Alarms _ShowAll";
+        else return x;
+
+    };
+
     // Maps initialization
     static {
         plComputations.put("NominalizeFromDative", pl_dativeToNom);
+        plComputations.put("GetAppFromAcc", pl_appNameMapperFromAcc);
     }
 
     public static String compute (String functionName, String slotType, String slotParamValue, Locale culture) {

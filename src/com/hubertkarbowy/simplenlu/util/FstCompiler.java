@@ -16,7 +16,10 @@ public class FstCompiler {
         //   System.out.println("Compiling rules from " + rulesDirs);
         System.out.println("=== Compiling rules... ===");
         try {
-            rules = Files.walk(fstRootPath).filter(x -> x.toString().contains("/root/") && x.toString().endsWith(".txt")).collect(Collectors.toList());
+            rules = Files.walk(fstRootPath).filter(x -> x.toString().contains("/root")
+                                                        && x.toString().endsWith(".txt")
+                                                        && !x.toString().contains("_isyms")
+                                                        && !x.toString().contains("_osyms")).collect(Collectors.toList());
 
             for (Path rule : rules) {
                 Path basename = rule.getFileName();
@@ -24,7 +27,18 @@ public class FstCompiler {
 
                 Path compiledFst = rule.getParent().resolve(basename.toString().replaceAll(".txt", ".fst"));
                 System.out.println("Compiling " + rule + " into " + compiledFst + " [culture = " + culture + "]");
-                String[] cmd = {"/bin/sh", "-c", "fstcompile --isymbols=" + fstRootPath + "/" + culture + "/isyms.txt --osymbols=" + fstRootPath + "/" + culture + "/osyms.txt --keep_isymbols --keep_osymbols " + rule + " " + compiledFst};
+                String[] cmd;
+                if (!rule.toString().contains("_special/")) {
+                    String[] zz = {"/bin/sh", "-c", "fstcompile --isymbols=" + fstRootPath + "/" + culture + "/isyms.txt --osymbols=" + fstRootPath + "/" + culture + "/osyms.txt --keep_isymbols --keep_osymbols " + rule + " " + compiledFst};
+                    cmd = zz;
+                }
+                else {
+                    // 1. extract final _something.txt
+                    // 2. find same i/osyms in special dir
+                    String specialRuleIdentifier = rule.toString().replaceAll(".txt$", "");
+                    String[] zz = {"/bin/sh", "-c", "fstcompile --isymbols=" + specialRuleIdentifier + "_isyms.txt --osymbols=" + specialRuleIdentifier + "_osyms.txt --keep_isymbols --keep_osymbols " + rule + " " + compiledFst};
+                    cmd = zz;
+                }
                 System.out.println(String.join(" ", cmd));
                 Process p = Runtime.getRuntime().exec(cmd);
                 p.waitFor();

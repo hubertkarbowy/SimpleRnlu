@@ -14,6 +14,8 @@ public class IntentFullfilment {
     static {
         responses.put("ShowWeather", WeatherIntents.weatherResponse);
         responses.put("WhereIs", GeneralKnowledgeIntents.whereis);
+        responses.put("AppLaunch", CommandControlIntents.openApp);
+        responses.put("OpenWebAddress", CommandControlIntents.openWebAddress);
     }
 
     public static String getResponse(MatchedIntent nluOutput, Locale locale) { // both display text and spoken text
