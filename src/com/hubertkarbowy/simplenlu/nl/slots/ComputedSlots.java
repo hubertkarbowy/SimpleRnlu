@@ -4,6 +4,7 @@ import com.hubertkarbowy.simplenlu.intents.IntentHelperMethods;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.Collectors;
 
 public class ComputedSlots {
 
@@ -57,10 +58,18 @@ public class ComputedSlots {
 
     };
 
+    private static BiFunction<String, String, String> all_Capitalize = (x,y) -> {
+        String[] words = x.split(" ");
+        List<String> capitalizedList = Arrays.asList(words).stream().map(w -> w.substring(0,1).toUpperCase() + w.substring(1)).collect(Collectors.toList());
+        String capitalizedX = String.join(" ", capitalizedList);
+        return capitalizedX;
+    };
+
     // Maps initialization
     static {
         plComputations.put("NominalizeFromDative", pl_dativeToNom);
         plComputations.put("GetAppFromAcc", pl_appNameMapperFromAcc);
+        plComputations.put("Capitalize", all_Capitalize);
     }
 
     public static String compute (String functionName, String slotType, String slotParamValue, Locale culture) {
@@ -70,6 +79,7 @@ public class ComputedSlots {
         switch (culture.toString()) {
             case "en_US":
                 // f = enAliases.get(slotName+"+"+slotParamValue);
+                f = plComputations.get(functionName);
                 break;
             case "pl_PL":
                 f = plComputations.get(functionName);

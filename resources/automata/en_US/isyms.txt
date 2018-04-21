@@ -12,3 +12,6 @@ today	10
 where	11
 are	12
 the	13
+who	14
+was	15
+were	16

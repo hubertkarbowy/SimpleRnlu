@@ -1,0 +1,24 @@
+0	1	open	<KW>	100
+0	1	launch	<KW>	100
+1	2	<eps>	{INTENT:AppLaunch}	0
+2	3	gallery	<COMPUTED_SLOT:AppName:Capitalize>	500
+2	3	calculator	<COMPUTED_SLOT:AppName:Capitalize>	500
+2	3	contacts	<COMPUTED_SLOT:AppName:Capitalize>	500
+2	3	settings	<COMPUTED_SLOT:AppName:Capitalize>	500
+2	3	clock	<COMPUTED_SLOT:AppName:Capitalize>	500
+2	3	browser	<COMPUTED_SLOT:AppName:Capitalize>	500
+2	3	email	<COMPUTED_SLOT:AppName:Capitalize>	500
+2	3	e-mail	<COMPUTED_SLOT:AppName:Capitalize>	500
+2	3	music	<COMPUTED_SLOT:AppName:Capitalize>	500
+2	3	phone	<COMPUTED_SLOT:AppName:Capitalize>	500
+2	3	sms	<COMPUTED_SLOT:AppName:Capitalize>	500
+2	3	navigation	<COMPUTED_SLOT:AppName:Capitalize>	500
+2	3	alarms	<COMPUTED_SLOT:AppName:Capitalize>	500
+2	4	<unk>	<REWRITE_SLOT:AppName>	150
+4	4	<unk>	<REWRITE_SLOT:AppName>	150
+2	5	web	<COMPUTED_SLOT:AppName:Capitalize> 500
+2	5	network	<COMPUTED_SLOT:AppName:Capitalize>	500
+5	3	settings	<COMPUTED_SLOT:AppName:Capitalize>	500
+5	3	browser	<COMPUTED_SLOT:AppName:Capitalize> 500
+3
+4

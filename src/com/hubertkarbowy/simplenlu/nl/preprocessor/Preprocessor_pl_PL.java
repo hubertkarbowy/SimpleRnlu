@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Preprocessor_pl_PL extends Preprocessor {
 
@@ -33,18 +31,15 @@ public class Preprocessor_pl_PL extends Preprocessor {
         System.out.println("[ISYMSPA]: "+isymsPaths);
     }
 
-    public List<String> tokenize (String asrOutput) { // TODO: should be abstract too ?
+    public List<String> tokenize (String asrOutput) {
         List<String> tokens = new ArrayList<>();
         int startPos=0;
-        int endPos=0;
         for (int i = 0; i<asrOutput.length(); i++) {
           if (asrOutput.charAt(i)==' ') {
-//              endPos=i+1;
               tokens.add(asrOutput.substring(startPos, i)); // -1 because we don't want the space
               startPos=i+1;
           }
           else if (asrOutput.charAt(i)=='.') {
-//              endPos=i+1;
               tokens.add(asrOutput.substring(startPos, i)); // -1 because we don't want the dot
               tokens.add(".");
               startPos=i+1;

@@ -16,6 +16,7 @@ public class IntentFullfilment {
         responses.put("WhereIs", GeneralKnowledgeIntents.whereis);
         responses.put("AppLaunch", CommandControlIntents.openApp);
         responses.put("OpenWebAddress", CommandControlIntents.openWebAddress);
+        responses.put("WhoIs", GeneralKnowledgeIntents.whoIs);
     }
 
     public static String getResponse(MatchedIntent nluOutput, Locale locale) { // both display text and spoken text

@@ -1,0 +1,8 @@
+0	1	who	<KW>	100
+1	2	is	<KW>	100
+1	2   was	<KW>	100
+1	2   are	<KW>	100
+1	2   were	<KW>	100
+2	3	<eps>	{INTENT:WhoIs}	0
+3	3	<unk>	<REWRITE_SLOT:Persona>	90
+3

@@ -14,7 +14,6 @@ public class DefaultSlots {
      */
 
     private static Map<String, BiFunction<String, Map<String, String>, String>> defaultAliases = new HashMap<>();
-//    private static Map<String, BiFunction<String, Map<String, String>, String>> enAliases = new HashMap<>();
     private static BiFunction<String, Map<String, String>, String> computeToday = (x,y) -> LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyy"));
     // "today" can be taken from ClientContext. But do I want this?
     private static BiFunction<String, Map<String, String>, String> computeTomorrow = (x,y) -> LocalDate.now().plusDays(1).format((DateTimeFormatter.ofPattern("dd.MM.yyy")));
@@ -24,9 +23,6 @@ public class DefaultSlots {
         defaultAliases.put("today", computeToday);
         defaultAliases.put("tomorrow", computeTomorrow);
         defaultAliases.put("here", identity);
-//        enAliases.put("today", computeToday);
-//        enAliases.put("tomorrow", computeTomorrow);
-//        enAliases.put("here", identity);
     }
     public static String compute (String slotName, Map<String, String> clientContext) {
 

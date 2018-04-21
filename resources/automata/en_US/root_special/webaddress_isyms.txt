@@ -1,0 +1,8 @@
+<eps>	0
+<unk>	1
+open	2
+www	3
+com	4
+edu	5
+pl	6
+.	7

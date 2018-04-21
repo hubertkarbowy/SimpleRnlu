@@ -7,3 +7,5 @@
 <DEFAULT_SLOT:NamedDate:today>	6
 {INTENT:WhereIs}    7
 <REWRITE_SLOT:Location> 8
+<REWRITE_SLOT:Persona>	9
+{INTENT:WhoIs}	10

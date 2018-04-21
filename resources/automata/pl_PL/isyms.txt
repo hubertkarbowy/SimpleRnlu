@@ -11,5 +11,9 @@ jutro	9
 dziś	10
 gdzie   11
 leży    12
-leżą    13
-są  14
+leżą	13
+są	14
+kim	15
+kto	16
+to	17
+był	18

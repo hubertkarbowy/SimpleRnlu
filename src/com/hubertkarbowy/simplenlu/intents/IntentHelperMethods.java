@@ -37,7 +37,7 @@ public class IntentHelperMethods {
         for (String slot : slots) {
             if (slot.startsWith("<"+key+":")) {
                 val = slot.replaceAll("<"+key+":|>", "");
-                System.out.println("From " + slot + " extracting " + key + " = " + val);
+                // System.out.println("From " + slot + " extracting " + key + " = " + val);
             }
         }
         return val;
@@ -146,5 +146,16 @@ public class IntentHelperMethods {
         }
 
         return map;
+    }
+
+    static String generateResponseFromResourceBundle(String rbPath, Locale locale, String... rbTokens) {
+        ResourceBundle rb = ResourceBundle.getBundle(rbPath, locale);
+        List<String> cmd2 = new ArrayList<>();
+        cmd2.addAll(Arrays.asList(rbTokens));
+        String outText = String.join(" ", cmd2.stream().map(x -> {
+            if (x.startsWith("VAL:")) return x.substring(4);
+            else return rb.getString(x);
+        }).collect(Collectors.toList()));
+        return formatPunctuation(outText);
     }
 }
