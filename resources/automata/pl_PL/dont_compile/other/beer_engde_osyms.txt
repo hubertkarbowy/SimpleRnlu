@@ -1,0 +1,7 @@
+<eps>	0
+ein	1
+zwei	2
+drei	3
+vier	4
+Bier	5
+bitte	6

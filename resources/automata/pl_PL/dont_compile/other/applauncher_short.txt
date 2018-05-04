@@ -1,0 +1,11 @@
+0	1	otwórz	<KW>	100
+0	1	pokaż	<KW>	100
+1	2	<eps>	{INTENT:AppLaunch}	0
+2	3	galerię	<COMPUTED_SLOT:AppName:GetAppFromAcc>	500
+2	3	kalkulator	<COMPUTED_SLOT:AppName:GetAppFromAcc>	500
+2	3	kontakty	<COMPUTED_SLOT:AppName:GetAppFromAcc>	500
+2	3	ustawienia	<COMPUTED_SLOT:AppName:GetAppFromAcc>	500
+2	3	zegar	<COMPUTED_SLOT:AppName:GetAppFromAcc>	500
+2	3	<unk>	<REWRITE_SLOT:AppName>	150
+3	3	<unk>	<REWRITE_SLOT:AppName>	500
+3

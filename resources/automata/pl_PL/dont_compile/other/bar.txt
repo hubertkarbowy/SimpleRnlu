@@ -1,0 +1,19 @@
+0	1	can
+1	2	I
+2	3	have
+3	4	one
+3	8	some
+4	5	glass
+5	6	of
+6	7	beer
+8	7	beer
+3	9	two
+3	10	three
+3	11	four
+9	12	glasses
+10	12	glasses
+11	12	glasses
+12	6	of
+7	13	please
+7
+13

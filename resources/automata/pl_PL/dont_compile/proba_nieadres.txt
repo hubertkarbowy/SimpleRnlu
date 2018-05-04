@@ -1,0 +1,3 @@
+0	1	otwórz
+1	2	galerię
+2

@@ -1,0 +1,9 @@
+0	1	otwórz	<KW>	100
+1	2	<eps>	{INTENT:OpenWebAddress}	0
+2	2	www	<REWRITE_SLOT:WebAddressPart>	500
+2	2	com	<REWRITE_SLOT:WebAddressPart>	500
+2	2	pl	<REWRITE_SLOT:WebAddressPart>	500
+2	2	edu	<REWRITE_SLOT:WebAddressPart>	150
+2	2	.	<REWRITE_SLOT:WebAddressPart>	500
+2	2	<unk>	<REWRITE_SLOT:WebAddressPart>	100
+2
