@@ -1,0 +1,13 @@
+0	1	na	<KW>	100
+0	1	o	<KW>	100
+0	1	<eps>	<NIL>	0
+1	2	<eps>	{INTENT:SetAlarmForTime}	0
+2	3	1	<REWRITE_SLOT:Hour>	500
+2	3	2	<REWRITE_SLOT:Hour>	500
+2	3	3	<REWRITE_SLOT:Hour>	500
+2	3	4	<REWRITE_SLOT:Hour>	500
+2	3	14	<REWRITE_SLOT:Hour>	500
+3	4	:	<KW>	100
+4	5	00	<REWRITE_SLOT:Minute>	500
+4	5	30	<REWRITE_SLOT:Minute>	500
+5

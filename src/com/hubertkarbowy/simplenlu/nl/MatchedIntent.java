@@ -24,6 +24,12 @@ public class MatchedIntent {
                 values.add(nlTokens.get(nlIndex));
             }
 
+            if (currentSymbol.startsWith("<ELICITATION_ACTION:")) {
+                String actionName = currentSymbol.split(":")[1];
+                slots.add("ELICITATION_ACTION");
+                values.add(actionName.replaceAll(">", ""));
+            }
+
             if (currentSymbol.startsWith("<LOCALE_ALIAS_COMPUTED_SLOT:")) {
                 String optType = currentSymbol.split(":")[1];
                 optType = optType.replaceAll(">", "");

@@ -27,9 +27,9 @@ public class FstOutput {
 
     private int maxScore = 0;
 
-    public FstOutput (Locale locale,  List<String> nlTokens, String appContext, Preprocessor preprocessor) {
+    public FstOutput (Locale locale,  List<String> nlTokens, String continuationTransducer, Preprocessor preprocessor) {
         this.nlTokens = nlTokens;
-        this.appContext = appContext; // null means root context
+        this.continuationOf = continuationTransducer; // null means root context
         fstRootPath = "resources/automata/" + locale.toString();
         sessionID = UUID.randomUUID().toString();
         sessionPath = fstRootPath+"/session/utt"+sessionID;
@@ -49,6 +49,7 @@ public class FstOutput {
             pw.println(fstTxt.toString());
             pw.close();
             String[] cmd = {"/bin/sh", "-c", "fstcompile --isymbols=" + isymsPath.toString() + " --acceptor " + sessionPath + ".txt " + sessionPath + ".fst"};
+            // System.out.println("[SESSIONCOMP]: " + Arrays.asList(cmd).get(2));
             Process p = Runtime.getRuntime().exec(cmd);
             p.waitFor();
         }
@@ -67,16 +68,55 @@ public class FstOutput {
         File nlFst = null;
 
         try {
-        // 1. Sprobuj kontekstowo (jako kontynuacja)
+        // 1. First, we check if the NL query is a continuation and run it through the transducer specified in /ctxtcmd
         if (continuationOf != null ) {
-            // check the transducers for continuations
-            // return if there is a recognized intent
+            List<String> fstOutput = new ArrayList<>();
+
+            Path isyms = Paths.get(fstRootPath + "/contextual/" + continuationOf + "_isyms.txt");
+            Path osyms = Paths.get(fstRootPath + "/contextual/" + continuationOf + "_osyms.txt");
+            List<String> ppTokens = null;
+            try {
+                ppTokens = preprocessor.unknownize(nlTokens, continuationOf); // unknownize, given the chosen symbols table
+            }
+            catch (Exception transducerNotFound) {
+                return;
+            }
+            nlFst = buildFstFromNlTokens(isyms, ppTokens);
+            System.out.println("[PREPROC]: contextfst=" + continuationOf + " " + ppTokens);
+
+            String[] cmd = new String[3]; cmd[0]="/bin/sh"; cmd[1]="-c";
+            cmd[2] = "fstcompose " + nlFst.toString() + " " + (fstRootPath + "/contextual/" + continuationOf + ".fst") + " | fstproject --project_output | fstprint --acceptor";
+            System.out.println("[FSTCTX attempt]: " + Arrays.asList(cmd).get(2));
+
+            Process p = Runtime.getRuntime().exec(cmd);
+            p.waitFor();
+            String line;
+            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            while ((line = in.readLine()) != null) {
+                try {
+                    System.out.println(line);
+                    String outputTape = line.split("\t")[2];
+                    fstOutput.add(outputTape);
+                    if (outputTape.startsWith("{INTENT:")) winningIntent=outputTape;
+                }
+                catch (ArrayIndexOutOfBoundsException | NumberFormatException ee) {
+                    // ignoramus error
+                }
+            }
+            in.close();
+            if (winningIntent!=null) {
+                System.out.println("[FSTCMD ]: " + Arrays.asList(cmd).get(2));
+                System.out.println("[FSTOUT ]: " + fstOutput);
+                winningFstOutput=fstOutput; // there is at most one in a continuation
+            }
+            nlFst.delete();
+            return;
         }
 
         // 2. Jesli nic - sprobuj dla aplikacji
         if (appContext != null) {
             // check app-specific transducers
-            // return if there is a recognized intent
+            // return ONLY IF there is a recognized intent
         }
 
         // 3. Jesli dalej nic - wez ogolny
@@ -102,7 +142,7 @@ public class FstOutput {
 
                 nlFst = buildFstFromNlTokens(isyms, ppTokens);
                 cmd[2] = "fstcompose " + nlFst.toString() + " " + intent.toString() + " | fstproject --project_output | fstprint --acceptor";
-             //   System.out.println("[FSTCMD attempt]: " + Arrays.asList(cmd).get(2));
+                System.out.println("[FSTCMD attempt]: " + Arrays.asList(cmd).get(2));
 
                 Process p = Runtime.getRuntime().exec(cmd);
                 p.waitFor();
@@ -141,7 +181,7 @@ public class FstOutput {
         }
         finally {
             try {
-                nlFst.delete();
+               nlFst.delete();
             }
             catch (NullPointerException ze) {}
         }

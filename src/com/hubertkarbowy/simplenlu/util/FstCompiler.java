@@ -16,7 +16,7 @@ public class FstCompiler {
         //   System.out.println("Compiling rules from " + rulesDirs);
         System.out.println("=== Compiling rules... ===");
         try {
-            rules = Files.walk(fstRootPath).filter(x -> x.toString().contains("/root")
+            rules = Files.walk(fstRootPath).filter(x -> (x.toString().contains("/root") | x.toString().contains("/contextual"))
                                                         && x.toString().endsWith(".txt")
                                                         && !x.toString().contains("_isyms")
                                                         && !x.toString().contains("_osyms")).collect(Collectors.toList());
@@ -28,7 +28,7 @@ public class FstCompiler {
                 Path compiledFst = rule.getParent().resolve(basename.toString().replaceAll(".txt", ".fst"));
                 System.out.println("Compiling " + rule + " into " + compiledFst + " [culture = " + culture + "]");
                 String[] cmd;
-                if (!rule.toString().contains("_special/")) {
+                if (!rule.toString().contains("_special/") & !rule.toString().contains("contextual/")) {
                     String[] zz = {"/bin/sh", "-c", "fstcompile --isymbols=" + fstRootPath + "/" + culture + "/isyms.txt --osymbols=" + fstRootPath + "/" + culture + "/osyms.txt --keep_isymbols --keep_osymbols " + rule + " " + compiledFst};
                     cmd = zz;
                 }

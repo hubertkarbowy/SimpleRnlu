@@ -44,6 +44,11 @@ public class Preprocessor_pl_PL extends Preprocessor {
               tokens.add(".");
               startPos=i+1;
           }
+          else if (asrOutput.charAt(i)==':') {
+              tokens.add(asrOutput.substring(startPos, i)); // -1 because we don't want the colon
+              tokens.add(":");
+              startPos=i+1;
+          }
         }
         if (startPos != asrOutput.length()) tokens.add(asrOutput.substring(startPos, asrOutput.length()));
 

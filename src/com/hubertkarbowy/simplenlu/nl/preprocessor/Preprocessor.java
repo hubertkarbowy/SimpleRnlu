@@ -20,7 +20,7 @@ public abstract class Preprocessor {
                 isyms.put(singleTransducer.getKey(), new HashMap<>());
                 Map<Integer,String> thisIsyms = isyms.get(singleTransducer.getKey());
                 BufferedReader isyms_reader = new BufferedReader(new FileReader(new File(singleTransducer.getValue())));
-                Pattern symbolEntry = Pattern.compile("([\\w<>]+)[\\s\\t]+(.*)", Pattern.UNICODE_CHARACTER_CLASS);
+                Pattern symbolEntry = Pattern.compile("([\\w<>:]+)[\\s\\t]+(.*)", Pattern.UNICODE_CHARACTER_CLASS);
                 while ((symbol = isyms_reader.readLine()) != null) {
                      System.out.println("SYMBOL LINE "+ symbol);
                     Matcher m = symbolEntry.matcher(symbol);
@@ -42,6 +42,7 @@ public abstract class Preprocessor {
 
     public List<String> unknownize (List<String> nlInput, String transducer) { // TODO: potem zmienic na protected (?), getSymbols tez
         Map<Integer, String> thisIsyms = isyms.get(transducer);
+        System.out.println("[PREPROC]: Isyms map = " + thisIsyms);
         if (transducer==null || thisIsyms==null) throw new RuntimeException("Transducer " + transducer + " not found!");
         return nlInput.stream().map(x -> thisIsyms.containsValue(x) ? x : "<unk>").collect(Collectors.toList());
     }

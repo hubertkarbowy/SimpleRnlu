@@ -100,17 +100,28 @@ public class SimpleRnlu implements Runnable {
                     if (recvd.startsWith("/sc")) {
                         setContext(recvd.replaceAll("/sc ", ""));
                         //  System.out.println("Set context: " + clientContext + "\n> ");
-                    } else if (recvd.startsWith("/def")) PredefinedStates.setDefaultContext(this);
+                    }
+                    else if (recvd.startsWith("/def")) PredefinedStates.setDefaultContext(this);
                     else if (recvd.startsWith("/cc")) clearContext();
-                    else if (recvd.startsWith("/cmd ")) {
+                    else if (recvd.startsWith("/cmd ") | recvd.startsWith("/ctxtcmd")) {
                         String asrOutput = recvd.replaceAll("/cmd ", "");
+                        asrOutput = asrOutput.replaceAll("/ctxtcmd ", "");
                         asrOutput = asrOutput.toLowerCase();
                         System.out.println("[ASR    ]: " + asrOutput);
-                        List<String> nlTokens = preprocessor.tokenize(asrOutput);
-                        System.out.println("[TOKENIZ]: " + nlTokens);
-//                        List<String> preprocessorTokens = preprocessor.unknownize(nlTokens);
-//                        System.out.println("[PREPROC]: " + preprocessorTokens);
-                        FstOutput fst = new FstOutput(locale, nlTokens, null, preprocessor);
+                        List<String> nlTokens = null;
+                        FstOutput fst = null;
+                        if (recvd.startsWith("/ctxtcmd")) {
+                            nlTokens = preprocessor.tokenize(asrOutput);
+                            String continuationTransducer = getContinuationTransducer(recvd);
+                            nlTokens = nlTokens.subList(1,nlTokens.size());
+                            System.out.println("[TOKENIZ]: " + nlTokens);
+                            fst = new FstOutput(locale, nlTokens, continuationTransducer, preprocessor);
+                        }
+                        else {
+                            nlTokens = preprocessor.tokenize(asrOutput);
+                            System.out.println("[TOKENIZ]: " + nlTokens);
+                            fst = new FstOutput(locale, nlTokens, null, preprocessor);
+                        }
                         fst.transduce();
                         MatchedIntent intentString = new MatchedIntent(nlTokens, fst.getFstOutput(), locale, clientContext);
                         System.out.println("[NLU    ]:" + intentString);
@@ -142,6 +153,10 @@ public class SimpleRnlu implements Runnable {
 	    String key = params[0];
 	    String value = params[1];
 	    this.clientContext.put(key, value);
+    }
+
+    private String getContinuationTransducer(String recvd) {
+        return recvd.split(" ")[1]; // /ctxtcmd SetAlarmForWhatTime na 14:30
     }
 
     private void clearContext() {
