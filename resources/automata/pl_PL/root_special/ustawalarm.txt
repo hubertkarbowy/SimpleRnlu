@@ -2,12 +2,11 @@
 1	2	budzik	<KW>    100
 1	2	alarm	<KW>	100
 2	3	<eps>	{INTENT:SetAlarmForTime}	0
-3	9	<eps>	<ELICITATION_ACTION:SetAlarmForWhatTime>	0
+3	8	<eps>	<ELICITATION_ACTION:SetAlarmForWhatTime>	0
 3	4	o	<KW>	100
 3	4	na	<KW>	100
-4	8	godzinę	<KW>	100
-4	8	godzinie	<KW>	100
-8	4	<eps>	<NIL>	0
+4	4	godzinę	<KW>	100
+4	4	godzinie	<KW>	100
 4	5	01	<REWRITE_SLOT:Hour>	500
 4	5	02	<REWRITE_SLOT:Hour>	500
 4	5	03	<REWRITE_SLOT:Hour>	500
@@ -37,4 +36,4 @@
 6	7	30	<REWRITE_SLOT:Minute>	500
 6	7	45	<REWRITE_SLOT:Minute>	500
 7
-9
+8
