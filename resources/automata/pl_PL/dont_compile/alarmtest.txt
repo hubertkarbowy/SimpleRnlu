@@ -1,0 +1,3 @@
+0	1	ustaw
+1	2	alarm
+2

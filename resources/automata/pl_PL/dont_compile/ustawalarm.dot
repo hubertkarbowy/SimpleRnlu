@@ -1,0 +1,55 @@
+digraph FST {
+rankdir = LR;
+size = "8.5,11";
+label = "";
+center = 1;
+orientation = Portrait;
+ranksep = "0.4";
+nodesep = "0.25";
+0 [label = "0", shape = circle, style = bold, fontsize = 14]
+	0 -> 1 [label = "ustaw:<KW>/100", fontsize = 14];
+1 [label = "1", shape = circle, style = solid, fontsize = 14]
+	1 -> 2 [label = "budzik:<KW>/100", fontsize = 14];
+	1 -> 2 [label = "alarm:<KW>/100", fontsize = 14];
+2 [label = "2", shape = circle, style = solid, fontsize = 14]
+	2 -> 3 [label = "<eps>:{INTENT:SetAlarmForTime}", fontsize = 14];
+3 [label = "3", shape = circle, style = solid, fontsize = 14]
+	3 -> 4 [label = "<eps>:<ELICITATION_ACTION:SetAlarmForWhatTime>", fontsize = 14];
+	3 -> 5 [label = "o:<KW>/100", fontsize = 14];
+	3 -> 5 [label = "na:<KW>/100", fontsize = 14];
+4 [label = "4", shape = doublecircle, style = solid, fontsize = 14]
+5 [label = "5", shape = circle, style = solid, fontsize = 14]
+	5 -> 5 [label = "godzinę:<KW>/100", fontsize = 14];
+	5 -> 5 [label = "godzinie:<KW>/100", fontsize = 14];
+	5 -> 6 [label = "01:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "02:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "03:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "04:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "05:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "06:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "07:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "08:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "09:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "10:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "11:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "12:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "13:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "14:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "15:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "16:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "17:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "18:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "19:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "20:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "21:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "22:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+	5 -> 6 [label = "23:<REWRITE_SLOT:Hour>/500", fontsize = 14];
+6 [label = "6", shape = circle, style = solid, fontsize = 14]
+	6 -> 7 [label = "::<KW>/100", fontsize = 14];
+7 [label = "7", shape = circle, style = solid, fontsize = 14]
+	7 -> 8 [label = "00:<REWRITE_SLOT:Minute>/500", fontsize = 14];
+	7 -> 8 [label = "15:<REWRITE_SLOT:Minute>/500", fontsize = 14];
+	7 -> 8 [label = "30:<REWRITE_SLOT:Minute>/500", fontsize = 14];
+	7 -> 8 [label = "45:<REWRITE_SLOT:Minute>/500", fontsize = 14];
+8 [label = "8", shape = doublecircle, style = solid, fontsize = 14]
+}

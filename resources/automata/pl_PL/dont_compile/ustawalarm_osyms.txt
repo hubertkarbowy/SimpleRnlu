@@ -1,0 +1,8 @@
+<eps>	0
+<KW>	1
+{INTENT:SetAlarmForTime}	2
+<ELICITATION_ACTION:SetAlarmForWhatTime>	3
+<NIL>	4
+<REWRITE_SLOT:Hour>	5
+<REWRITE_SLOT:Minute>	6
+

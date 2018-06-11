@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Preprocessor_pl_PL extends Preprocessor {
 
@@ -32,25 +33,28 @@ public class Preprocessor_pl_PL extends Preprocessor {
     }
 
     public List<String> tokenize (String asrOutput) {
+        List<String> stopWords = Arrays.asList("proszę");
+        String asrOutputAfterStop = Arrays.asList(asrOutput.split(" ")).stream().filter(x -> !stopWords.contains(x)).collect(Collectors.joining(" "));
         List<String> tokens = new ArrayList<>();
+
         int startPos=0;
-        for (int i = 0; i<asrOutput.length(); i++) {
-          if (asrOutput.charAt(i)==' ') {
-              tokens.add(asrOutput.substring(startPos, i)); // -1 because we don't want the space
+        for (int i = 0; i<asrOutputAfterStop.length(); i++) {
+          if (asrOutputAfterStop.charAt(i)==' ') {
+              tokens.add(asrOutputAfterStop.substring(startPos, i)); // -1 because we don't want the space
               startPos=i+1;
           }
-          else if (asrOutput.charAt(i)=='.') {
-              tokens.add(asrOutput.substring(startPos, i)); // -1 because we don't want the dot
+          else if (asrOutputAfterStop.charAt(i)=='.') {
+              tokens.add(asrOutputAfterStop.substring(startPos, i)); // -1 because we don't want the dot
               tokens.add(".");
               startPos=i+1;
           }
-          else if (asrOutput.charAt(i)==':') {
-              tokens.add(asrOutput.substring(startPos, i)); // -1 because we don't want the colon
+          else if (asrOutputAfterStop.charAt(i)==':') {
+              tokens.add(asrOutputAfterStop.substring(startPos, i)); // -1 because we don't want the colon
               tokens.add(":");
               startPos=i+1;
           }
         }
-        if (startPos != asrOutput.length()) tokens.add(asrOutput.substring(startPos, asrOutput.length()));
+        if (startPos != asrOutputAfterStop.length()) tokens.add(asrOutputAfterStop.substring(startPos, asrOutputAfterStop.length()));
 
         // return Arrays.asList(asrOutput.split(" |\\."));
         return tokens;
