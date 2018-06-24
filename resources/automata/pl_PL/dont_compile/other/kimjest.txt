@@ -1,8 +1,0 @@
-0	2	kim	<KW>	100
-2	3	jest	<KW>	100
-0	1	kto	<KW>	100
-1	2	to	<KW>	100
-2	3	był	<KW>	100
-3	4	<eps>	{INTENT:WhoIs}	0
-4	4	<unk>	<REWRITE_SLOT:Persona>	90
-4

@@ -1,6 +1,0 @@
-<eps>	0
-<KW>	1
-<NIL>	2
-{INTENT:SetAlarmForTime}	3
-<REWRITE_SLOT:Hour>	4
-<REWRITE_SLOT:Minute>	5

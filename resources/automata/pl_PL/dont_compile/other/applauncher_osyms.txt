@@ -1,5 +1,0 @@
-<eps>	0
-<KW>	1
-{INTENT:AppLaunch}	2
-<COMPUTED_SLOT:AppName:GetAppFromAcc>	3
-<REWRITE_SLOT:AppName>	4
