@@ -1,5 +1,10 @@
 package com.hubertkarbowy.simplenlu.intents;
 
+import edu.cmu.sphinx.linguist.dictionary.Word;
+import morfologik.stemming.WordData;
+import morfologik.stemming.polish.PolishStemmer;
+import org.apache.lucene.analysis.pl.PolishAnalyzer;
+import org.apache.lucene.analysis.stempel.StempelStemmer;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -17,6 +22,9 @@ public class IntentHelperMethods {
     static Map<String, Map<String, String>> polimorf_pl_PL; // should prob be moved to a locale-specific class
                                                             // keys = 1st column (inflected forms)
                                                             // values = <tags:lexical_category, baseform>
+    static StempelStemmer stempelStemmer = new StempelStemmer(PolishAnalyzer.getDefaultTable());
+    static PolishStemmer morfologikStemmer = new PolishStemmer();
+
     static {
         try {
             System.out.println("[INFO  ]: Loading weather gazetteer...");
@@ -83,6 +91,19 @@ public class IntentHelperMethods {
         return retVal;
     }
 
+    public static String getPolishStem (String inflectedWord) {
+//        List<WordData> mfResult = morfologikStemmer.lookup(inflectedWord);
+//        StringBuilder sb = new StringBuilder();
+//        if (mfResult.size()>0) return mfResult.get(0).getStem().toString();
+//        else return "";
+//        for (WordData wd : mfResult) {
+//            sb.append(wd.getStem());
+//        }
+//        return sb.toString();
+        return stempelStemmer.stem(inflectedWord).toString();
+
+    }
+
     static void loadPolimorf() {
         // TODO: Rather than load the whole bunch into memory, consider binary search over the sorted file.
 
@@ -133,7 +154,6 @@ public class IntentHelperMethods {
 //            System.out.println ("OK, saved.");
 //        }
 //        catch (Exception e) {}
-
     }
 
     static Map<String, String> convertResourceBundleToMap(ResourceBundle resource) {

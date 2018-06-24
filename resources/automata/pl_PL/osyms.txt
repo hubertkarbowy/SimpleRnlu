@@ -9,3 +9,5 @@
 <REWRITE_SLOT:Location> 8
 <REWRITE_SLOT:Persona>	9
 {INTENT:WhoIs}	10
+{INTENT:CallTo}	11
+<COMPUTED_SLOT:Persona:Stem>	12

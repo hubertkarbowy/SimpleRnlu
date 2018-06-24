@@ -17,3 +17,5 @@ kim	15
 kto	16
 to	17
 był	18
+zadzwoń	19
+do	20

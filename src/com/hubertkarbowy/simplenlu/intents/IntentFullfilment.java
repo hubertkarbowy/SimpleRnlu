@@ -18,6 +18,7 @@ public class IntentFullfilment {
         responses.put("OpenWebAddress", CommandControlIntents.openWebAddress);
         responses.put("WhoIs", GeneralKnowledgeIntents.whoIs);
         responses.put("SetAlarmForTime", CommandControlIntents.setAlarmForTime);
+        responses.put("CallTo", CommandControlIntents.callTo);
     }
 
     public static String getResponse(MatchedIntent nluOutput, Locale locale) { // both display text and spoken text

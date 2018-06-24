@@ -70,4 +70,15 @@ public class CommandControlIntents {
         retVal.put("DisplayText", spokenText);
         return retVal;
     };
+
+    static BiFunction<Locale, List<String>, Map<String,String>> callTo = (Locale locale, List<String> args) -> {
+        Map<String, String> retVal = new HashMap<>();
+
+        System.out.println("[CALLTO ]: " + args);
+
+
+        retVal.put("SpokenText", "*DELEGATED*");
+        retVal.put("DisplayText", "*DELEGATED*");
+        return retVal;
+    };
 }

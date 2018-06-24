@@ -1,0 +1,6 @@
+0	1	zadzwoń	<KW>	100
+1	2	do	<KW>	100
+2	3	<eps>	{INTENT:CallTo}	0
+3	4	<unk>	<COMPUTED_SLOT:Persona:Stem>	90
+4	4	<unk>	<COMPUTED_SLOT:Persona:Stem>	90
+4

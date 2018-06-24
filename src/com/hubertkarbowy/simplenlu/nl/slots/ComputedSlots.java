@@ -13,7 +13,7 @@ public class ComputedSlots {
 
 
     // Function definitions
-    private static BiFunction<String, String, String> pl_dativeToNom = (x, y) -> { // x = slot value, y = slot type
+    private static BiFunction<String, String, String> pl_locativeToNom = (x, y) -> { // x = slot value, y = slot type
 
         // If the slot type is CityName, let's first try lemmatizing with Polimorf in a very simplified way.
         // This will behave erratically since the inputs are underspecified for gender and number, so
@@ -65,11 +65,19 @@ public class ComputedSlots {
         return capitalizedX;
     };
 
+    private static BiFunction<String, String, String> pl_stempelStem = (x,y) -> {
+        String[] words = x.split(" ");
+        List<String> stemmedList = Arrays.asList(words).stream().map(w -> IntentHelperMethods.getPolishStem(w)).collect(Collectors.toList());
+        String stemmedPhrase = String.join(" ", stemmedList);
+        return stemmedPhrase;
+    };
+
     // Maps initialization
     static {
-        plComputations.put("NominalizeFromDative", pl_dativeToNom);
+        plComputations.put("NominalizeFromDative", pl_locativeToNom);
         plComputations.put("GetAppFromAcc", pl_appNameMapperFromAcc);
         plComputations.put("Capitalize", all_Capitalize);
+        plComputations.put("Stem", pl_stempelStem);
     }
 
     public static String compute (String functionName, String slotType, String slotParamValue, Locale culture) {
