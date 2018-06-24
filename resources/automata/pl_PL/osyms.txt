@@ -11,3 +11,4 @@
 {INTENT:WhoIs}	10
 {INTENT:CallTo}	11
 <COMPUTED_SLOT:Persona:Stem>	12
+{INTENT:TimezoneEnquiry}	13

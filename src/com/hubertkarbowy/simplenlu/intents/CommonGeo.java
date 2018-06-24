@@ -24,25 +24,17 @@ public class CommonGeo {
         double temperature;
         double clouds;
         double windSpeed;
-        double lon;
-        double lat;
 
         public CityObject(String cityID, String cityName) {
             this.cityID = cityID;
             this.cityName = cityName;
         }
-
-        public CityObject(String cityID, String cityName, double lon, double lat) {
-            this.cityID = cityID;
-            this.cityName = cityName;
-            this.lon = lon;
-            this.lat = lat;
-        }
     }
 
     static class CityIDTuple {
-        String cityID; String cityName;
+        String cityID; String cityName; String lon; String lat;
         public CityIDTuple(String cityID, String cityName) { this.cityID = cityID; this.cityName = cityName; }
+        public CityIDTuple(String cityID, String cityName, String lon, String lat) { this.cityID = cityID; this.cityName = cityName; this.lon = lon; this.lat = lat; }
     }
 
     static String getEnglishName(String cityName, Locale locale) {
@@ -61,9 +53,13 @@ public class CommonGeo {
 
         String foundID = null;
         String foundName = null;
+        String foundLon = null;
+        String foundLat = null;
 
         String foundIDHeuristically = null;
         String foundNameHeuristically = null;
+        String foundLonHeuristically = null;
+        String foundLatHeuristically = null;
 
         Properties cityNameDisambiguation = new Properties();
         try (FileInputStream disambiguator=new FileInputStream("resources/gazetteers/location_disambiguator.properties")) {
@@ -73,7 +69,8 @@ public class CommonGeo {
 
         if (cityNameDisambiguation.getProperty(englishCityName) != null) { // Try to disambiguate the most common city names via a lookup table
             foundName = englishCityName;
-            foundID = cityNameDisambiguation.getProperty(englishCityName);
+            String[] cityRecord = cityNameDisambiguation.getProperty(englishCityName).split("\\*");
+            foundID = cityRecord[0]; foundLon = cityRecord[1]; foundLat = cityRecord[2];
         }
         else {
             int minEditDistance = 100; // March through the gazetteer if disambiguation failed
@@ -81,15 +78,22 @@ public class CommonGeo {
                 JSONObject city = (JSONObject) cityobj;
                 String json_city = city.get("name").toString().toLowerCase();
                 String json_cityid = city.get("id").toString();
+                JSONObject coordinates = (JSONObject) city.get("coord");
+                String json_lon = coordinates.get("lon").toString();
+                String json_lat = coordinates.get("lat").toString();
                 int editDistance = editDistance(json_city, englishCityName.toLowerCase(), AlignmentHelpers.DistanceType.LEVENSHTEIN);
                 if (editDistance < minEditDistance) {
                     minEditDistance = editDistance;
                     foundIDHeuristically = json_cityid;
                     foundNameHeuristically = json_city;
+                    foundLatHeuristically = json_lat;
+                    foundLonHeuristically = json_lon;
                 }
                 if (editDistance == 0) {
                     foundID = json_cityid;
                     foundName = json_city;
+                    foundLat = json_lat;
+                    foundLon = json_lon;
                     break;
                 }
             }
@@ -97,9 +101,11 @@ public class CommonGeo {
             if (foundID==null && minEditDistance<=MAX_EDIT_DISTANCE) {
                 foundID=foundIDHeuristically;
                 foundName=foundNameHeuristically;
+                foundLat=foundLatHeuristically;
+                foundLon=foundLonHeuristically;
             }
         }
         if (foundID == null || foundName == null) return null;
-        else return new CityIDTuple(foundID, foundName);
+        else return new CityIDTuple(foundID, foundName, foundLon, foundLat);
     }
 }

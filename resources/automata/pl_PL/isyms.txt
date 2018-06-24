@@ -19,3 +19,6 @@ to	17
 był	18
 zadzwoń	19
 do	20
+która	21
+teraz	22
+godzina	23

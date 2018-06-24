@@ -19,6 +19,7 @@ public class IntentFullfilment {
         responses.put("WhoIs", GeneralKnowledgeIntents.whoIs);
         responses.put("SetAlarmForTime", CommandControlIntents.setAlarmForTime);
         responses.put("CallTo", CommandControlIntents.callTo);
+        responses.put("TimezoneEnquiry", TimezoneIntents.timeInLocation);
     }
 
     public static String getResponse(MatchedIntent nluOutput, Locale locale) { // both display text and spoken text
