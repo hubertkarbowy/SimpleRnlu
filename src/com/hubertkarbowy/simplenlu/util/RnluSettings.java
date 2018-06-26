@@ -18,7 +18,7 @@ public class RnluSettings {
     public static final String OPENWEATHERMAP_API_URL="http://api.openweathermap.org/data/2.5/";
 
     public static final String TIMEZONEDB_API_KEY="427OH5JUEMFZ";
-    public static final String TIMEZONEDB_API_URL="http://api.timezonedb.com/v2/get-time-zone/";
+    public static final String TIMEZONEDB_API_URL="http://api.timezonedb.com/v2/";
 
     public static final DateTimeFormatter OPENWEATHERMAP_DATETIMEFORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 }
