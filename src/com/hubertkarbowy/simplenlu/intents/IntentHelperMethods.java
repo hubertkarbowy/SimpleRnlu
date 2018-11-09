@@ -54,7 +54,6 @@ public class IntentHelperMethods {
     }
 
     public static String formatPunctuation (String seq) {
-
         String retVal = seq.replaceAll(" *$|^ *", "");
         retVal = retVal.replaceAll("  ", " ");
         retVal = retVal.replaceAll(" \\.", ".");

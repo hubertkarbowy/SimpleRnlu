@@ -2,6 +2,9 @@
 0	3	pogoda	<KW>    100
 1	2	jest	<KW>    100
 1	2	będzie	<KW>    100
+2	10	jutro	<KW>	100
+2	10	dziś	<KW>	100
+10	3	pogoda	<KW>	100
 2	3	pogoda	<KW>    100
 3	4	<eps>	{INTENT:ShowWeather}    0
 4	5	w	<KW>    100
