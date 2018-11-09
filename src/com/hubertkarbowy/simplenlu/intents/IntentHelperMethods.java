@@ -1,7 +1,5 @@
 package com.hubertkarbowy.simplenlu.intents;
 
-import edu.cmu.sphinx.linguist.dictionary.Word;
-import morfologik.stemming.WordData;
 import morfologik.stemming.polish.PolishStemmer;
 import org.apache.lucene.analysis.pl.PolishAnalyzer;
 import org.apache.lucene.analysis.stempel.StempelStemmer;
