@@ -28,16 +28,25 @@ public class ComputedSlots {
 
         // Otherwise, try a heuristics.
 
-        String stemcons=""; String sfxending="";
-        if (x.endsWith("ie")) {
-            if (x.endsWith("dzie")) return x.replaceAll("dzie$", "d");
-            else if (x.endsWith("cie")) return x.replaceAll("cie$", "t");
-            else return x.replaceAll("ie$", "");
+        String[] locationTokens = x.split(" ");
+        String resultantLocation = "";
+        for (String token : locationTokens) {
+            if (token.endsWith("ie")) {
+                if (token.endsWith("dzie")) resultantLocation = resultantLocation + " " + token.replaceAll("dzie$", "d");
+                else if (token.endsWith("cie")) resultantLocation = resultantLocation + " " + token.replaceAll("cie$", "t");
+                else resultantLocation = resultantLocation + " " + token.replaceAll("ie$", "");
             }
-        else if (x.endsWith("dze")) return x.replaceAll("dze$", "ga");
-        else if (x.endsWith("niu")) return x.replaceAll("niu$", "ń");
-        else if (x.endsWith("u")) return x.replaceAll("u$", "");
-        else return x;
+            else if (token.endsWith("dze")) resultantLocation = resultantLocation + " " + token.replaceAll("dze$", "ga");
+            else if (token.endsWith("niu")) resultantLocation = resultantLocation + " " + token.replaceAll("niu$", "ń");
+            else if (token.endsWith("u")) resultantLocation = resultantLocation + " " + token.replaceAll("u$", "");
+            else if (token.endsWith("im")) resultantLocation = resultantLocation + " " + token.replaceAll("im$", "i");
+            else if (token.endsWith("ej")) resultantLocation = resultantLocation + " " +  token.replaceAll("ej$", "a");
+            // else if (token.endsWith("nej")) resultantLocation = resultantLocation + " " + token.replaceAll("nej$", "a");
+            // else if (token.endsWith("łej")) resultantLocation = resultantLocation + " " + token.replaceAll("łej$", "a");
+            else if (token.endsWith("nym")) resultantLocation = resultantLocation + " " + token.replaceAll("nym$", "ne");
+            else resultantLocation = resultantLocation + " " + token;
+        }
+        return resultantLocation.trim();
         };
 
     private static BiFunction<String, String, String> pl_appNameMapperFromAcc = (x, y) -> {
@@ -91,6 +100,7 @@ public class ComputedSlots {
                 break;
             case "pl_PL":
                 f = plComputations.get(functionName);
+                break;
             default:
                 break;
         }

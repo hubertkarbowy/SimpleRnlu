@@ -29,7 +29,12 @@ public class IntentFullfilment {
         System.out.println("Found intent = " + matchedIntent);
         if (responses.containsKey(matchedIntent)) {
             texts = responses.get(matchedIntent).apply(locale, nluOutput.getSlotsAndValues());
-            response = "{SPOKENTEXT:" + formatPunctuation(texts.get("SpokenText")) + "}{DISPLAYTEXT:" + formatPunctuation(texts.get("DisplayText")) +"}";
+            try {
+                response = "{SPOKENTEXT:" + formatPunctuation(texts.get("SpokenText")) + "}{DISPLAYTEXT:" + formatPunctuation(texts.get("DisplayText")) + "}";
+            }
+            catch (NullPointerException e) {
+                response = "{SPOKENTEXT:Unknown command}{DISPLAYTEXT:Unknown command.}";
+            }
         }
         else response = "{SPOKENTEXT:Unknown command}{DISPLAYTEXT:Unknown command.}"; // TODO: Externalize strings
         return response;

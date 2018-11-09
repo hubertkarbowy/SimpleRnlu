@@ -31,13 +31,19 @@ public class CommonGeo {
         }
     }
 
-    static class CityIDTuple {
-        String cityID; String cityName; String lon; String lat;
+    public static class CityIDTuple {
+        String cityID; public String cityName; String lon; String lat; String country;
         public CityIDTuple(String cityID, String cityName) { this.cityID = cityID; this.cityName = cityName; }
         public CityIDTuple(String cityID, String cityName, String lon, String lat) { this.cityID = cityID; this.cityName = cityName; this.lon = lon; this.lat = lat; }
+        public CityIDTuple(String cityID, String cityName, String lon, String lat, String country) { this.cityID = cityID; this.cityName = cityName; this.lon = lon; this.lat = lat; this.country = country;}
+
+        @Override
+        public String toString() {
+            return "city="+cityID+";lat="+lat+";lon="+lon+";country="+country;
+        }
     }
 
-    static String getEnglishName(String cityName, Locale locale) {
+    public static String getEnglishName(String cityName, Locale locale) {
         ResourceBundle toEnglishName = ResourceBundle.getBundle("gazetteers/cityNames", locale, new UTF8Control());
 
         // Try to substitute locale specific city names with English ones, e.g. Wiedeń -> Vienna. If that fails, we fall back to input values.
@@ -49,15 +55,17 @@ public class CommonGeo {
         return englishName;
     }
 
-    static CityIDTuple disambiguateCityName(String englishCityName) {
+    public static CityIDTuple disambiguateCityName(String englishCityName) {
 
         String foundID = null;
         String foundName = null;
+        String foundCountry = null;
         String foundLon = null;
         String foundLat = null;
 
         String foundIDHeuristically = null;
         String foundNameHeuristically = null;
+        String foundCountryHeuristically = null;
         String foundLonHeuristically = null;
         String foundLatHeuristically = null;
 
@@ -70,7 +78,7 @@ public class CommonGeo {
         if (cityNameDisambiguation.getProperty(englishCityName) != null) { // Try to disambiguate the most common city names via a lookup table
             foundName = englishCityName;
             String[] cityRecord = cityNameDisambiguation.getProperty(englishCityName).split("\\*");
-            foundID = cityRecord[0]; foundLon = cityRecord[1]; foundLat = cityRecord[2];
+            foundID = cityRecord[0]; foundLon = cityRecord[1]; foundLat = cityRecord[2]; foundCountry = "LOOKUP";
         }
         else {
             int minEditDistance = 100; // March through the gazetteer if disambiguation failed
@@ -78,6 +86,7 @@ public class CommonGeo {
                 JSONObject city = (JSONObject) cityobj;
                 String json_city = city.get("name").toString().toLowerCase();
                 String json_cityid = city.get("id").toString();
+                String json_country = city.get("country").toString();
                 JSONObject coordinates = (JSONObject) city.get("coord");
                 String json_lon = coordinates.get("lon").toString();
                 String json_lat = coordinates.get("lat").toString();
@@ -88,12 +97,14 @@ public class CommonGeo {
                     foundNameHeuristically = json_city;
                     foundLatHeuristically = json_lat;
                     foundLonHeuristically = json_lon;
+                    foundCountryHeuristically = json_country;
                 }
                 if (editDistance == 0) {
                     foundID = json_cityid;
                     foundName = json_city;
                     foundLat = json_lat;
                     foundLon = json_lon;
+                    foundCountry = json_country;
                     break;
                 }
             }
@@ -103,9 +114,10 @@ public class CommonGeo {
                 foundName=foundNameHeuristically;
                 foundLat=foundLatHeuristically;
                 foundLon=foundLonHeuristically;
+                foundCountry=foundCountryHeuristically;
             }
         }
         if (foundID == null || foundName == null) return null;
-        else return new CityIDTuple(foundID, foundName, foundLon, foundLat);
+        else return new CityIDTuple(foundID, foundName, foundLon, foundLat, foundCountry);
     }
 }

@@ -22,3 +22,6 @@ do	20
 która	21
 teraz	22
 godzina	23
+była	24
+byli	25
+były	26

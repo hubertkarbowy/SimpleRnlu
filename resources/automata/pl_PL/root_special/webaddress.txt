@@ -4,6 +4,26 @@
 2	2	com	<REWRITE_SLOT:WebAddressPart>	500
 2	2	pl	<REWRITE_SLOT:WebAddressPart>	500
 2	2	edu	<REWRITE_SLOT:WebAddressPart>	150
+2	2	biz	<REWRITE_SLOT:WebAddressPart>	150
+2	2	gov	<REWRITE_SLOT:WebAddressPart>	150
+2	2	mil	<REWRITE_SLOT:WebAddressPart>	150
+2	2	co	<REWRITE_SLOT:WebAddressPart>	150
+2	2	uk	<REWRITE_SLOT:WebAddressPart>	150
+2	2	de	<REWRITE_SLOT:WebAddressPart>	150
+2	2	fr	<REWRITE_SLOT:WebAddressPart>	150
+2	2	se	<REWRITE_SLOT:WebAddressPart>	150
+2	2	ru	<REWRITE_SLOT:WebAddressPart>	150
+2	2	at	<REWRITE_SLOT:WebAddressPart>	150
+2	2	es	<REWRITE_SLOT:WebAddressPart>	150
+2	2	pt	<REWRITE_SLOT:WebAddressPart>	150
+2	2	ac	<REWRITE_SLOT:WebAddressPart>	150
+2	2	ch	<REWRITE_SLOT:WebAddressPart>	150
+2	2	cz	<REWRITE_SLOT:WebAddressPart>	150
+2	2	sk	<REWRITE_SLOT:WebAddressPart>	150
+2	2	hu	<REWRITE_SLOT:WebAddressPart>	150
+2	2	gr	<REWRITE_SLOT:WebAddressPart>	150
+2	2	it	<REWRITE_SLOT:WebAddressPart>	150
+2	2	no	<REWRITE_SLOT:WebAddressPart>	150
 2	2	.	<REWRITE_SLOT:WebAddressPart>	500
 2	2	<unk>	<REWRITE_SLOT:WebAddressPart>	100
 2

@@ -4,7 +4,7 @@ import com.hubertkarbowy.simplenlu.nl.slots.AliasedSlots;
 public class PredefinedStates {
 
     public static void setDefaultContext (SimpleRnlu sessionClass) {
-        sessionClass.setContext("here*Cracow");
+        sessionClass.setContext("here*Warsaw");
         AliasedSlots as = AliasedSlots.getAliasedSlots(sessionClass.locale);
         sessionClass.setContext("today*"+ AliasedSlots.compute(as.getAliases(), "NamedDate", "dziś")); // hmm...
     }

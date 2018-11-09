@@ -40,7 +40,7 @@ public class WeatherIntents {
         else {
             CityObject cityObject = fetchOpenWeathermapInfo(cityIDTuple, forWhen);
             String returnedDate = cityObject.dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-            System.out.println("[GAZETTE]: " + cityName + " -> " + englishName + " -> " + cityObject.cityName);
+            System.out.println("[GAZETTE]: " + cityName + " -> EnglishLookup:" + englishName + " -> CityList:" + cityObject.cityName);
             spokenText = formSpokenResponse_forecast(cityName, returnedDate, cityObject, rb);
             displayText = spokenText;
         }

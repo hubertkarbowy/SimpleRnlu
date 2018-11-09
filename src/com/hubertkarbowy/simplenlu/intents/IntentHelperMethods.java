@@ -68,6 +68,38 @@ public class IntentHelperMethods {
      * Warning - inflectedForm is case-sensitive!
     **/
     public static String getPolimorfBaseForm(String inflectedForm, String tags[]) {
+        String retVal = "";
+
+        String [] splitTokens = inflectedForm.split(" ");
+
+        for (String token : splitTokens) {
+            int maxPoints = -1;
+            Map<String, String> polimorfEntry = polimorf_pl_PL.get(token);
+            if (polimorfEntry == null) return null;
+            else {
+                String winningForm = null;
+                for (Map.Entry<String, String> form : polimorfEntry.entrySet()) {
+                    // System.out.println("Candidate " + form);
+                    int score = 0;
+                    String entryTags = form.getKey();
+                    String entrybaseForm = form.getValue();
+                    List<String> entryTagsList = Arrays.asList(entryTags.split(":"));
+                    for (String tag : tags) {
+                        if (entryTagsList.contains(tag)) score += 1;
+                    }
+                    if (score > maxPoints) {
+                        maxPoints = score;
+                        winningForm = entrybaseForm;
+                    }
+                }
+                if (winningForm != null) retVal = retVal + " " + winningForm;
+                else return null;
+            }
+        }
+        return retVal.trim();
+    }
+
+    public static String getPolimorfBaseForm_orig(String inflectedForm, String tags[]) {
         String retVal = null;
         int maxPoints = -1;
         Map<String, String> polimorfEntry = polimorf_pl_PL.get(inflectedForm);
