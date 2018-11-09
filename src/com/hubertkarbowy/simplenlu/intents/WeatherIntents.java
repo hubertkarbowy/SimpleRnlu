@@ -62,8 +62,8 @@ public class WeatherIntents {
 
         if (foundID != null) {
             CityObject retVal = new CommonGeo.CityObject(foundID, foundName);
-            // String apiResponse = HttpHelperMethods.readFromApi(OPENWEATHERMAP_API_URL, "forecast", new String[] {"APPID="+OPENWEATHERMAP_API_KEY, "id="+retVal.cityID, "units=metric"});
-            String apiResponse = HttpHelperMethods.readResponseFromFile("resources/mocks/openweathermap_mock_metric_athens.json");
+            String apiResponse = HttpHelperMethods.readFromApi(OPENWEATHERMAP_API_URL, "forecast", new String[] {"APPID="+OPENWEATHERMAP_API_KEY, "id="+retVal.cityID, "units=metric"});
+            // String apiResponse = HttpHelperMethods.readResponseFromFile("resources/mocks/openweathermap_mock_metric_athens.json");
             JSONParser parser = new JSONParser();
             JSONObject cityForecast = null;
             try {
@@ -131,7 +131,7 @@ public class WeatherIntents {
         else if (cityObject.temperature>=13.0 && cityObject.temperature<=27.0) cmd2.add("warm");
         else if (cityObject.temperature>27.0) cmd2.add("hot");
         else cmd2.add("VAL:unk");
-        cmd2.addAll(Arrays.asList("VAL:.", "Temperature_C", "willbe_temp", "VAL:"+ cityObject.temperature, "degrees", "and_a", "sky", "willbe_inf"));
+        cmd2.addAll(Arrays.asList("VAL:.", "Temperature_C", "willbe_temp", "VAL:"+ roundOffTo1DecPlace(cityObject.temperature), "degrees", "and_a", "sky", "willbe_inf"));
         if (cityObject.clouds<15.0) cmd2.add("clear");
         else if (cityObject.clouds>=15.0 && cityObject.clouds<40) cmd2.add("a_few_clouds");
         else if (cityObject.clouds>=40.0) cmd2.add("cloudy");
@@ -144,5 +144,13 @@ public class WeatherIntents {
             else return rb.getString(x);
         }).collect(Collectors.toList()));
         return spokenText;
+    }
+
+    static String roundOffTo1DecPlace(double val) {
+        double decimal = val % 1;
+        if (decimal > 0 && decimal < 0.25) return ("" + (int)val);
+        else if (decimal >=0.25 && decimal <=0.75) return ("" + (int)val + ".5");
+        else if (decimal >0.75) return ("" + ((int)val + 1));
+        else return "" + val;
     }
 }
